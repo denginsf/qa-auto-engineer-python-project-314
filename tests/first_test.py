@@ -1,20 +1,10 @@
-import os
-import pytest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from pages.login_page import LoginPage
+from pages.main_page import MainPage
 
 
-@pytest.fixture
-def base_url():
-    return os.environ.get('APP_BASE_URL', 'http://localhost:5173')
-
-def test_first(base_url):
-    driver = webdriver.Chrome()
-    driver.get(base_url)
-    enter_login = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, ":r6:"))).send_keys('admin')
-    enter_password = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, ":r4:"))).send_keys('admin')
-    click_login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div/div/form/div/button'))).click()
-    title = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'react-admin-title'))).text
-    assert title == 'Welcome to the administration'
+def test_first(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open_login_page(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
