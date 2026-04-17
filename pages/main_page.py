@@ -10,3 +10,7 @@ class MainPage(BasePage):
     
     def title(self):
         return self.actions.get_title()
+
+    def logout(self):
+        self.actions.click_on_profile()
+        self.actions.click_on_logout()

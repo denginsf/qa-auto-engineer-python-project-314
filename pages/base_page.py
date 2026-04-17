@@ -22,3 +22,10 @@ class BasePage:
     def text_of_element(self, locator):
         action = self.wait.until(EC.visibility_of_element_located(locator))
         return action.text
+
+    def is_visible(self, locator):
+        try:
+            self.wait.until(EC.visibility_of_element_located(locator))
+            return True
+        except TimeoutException:
+            return False

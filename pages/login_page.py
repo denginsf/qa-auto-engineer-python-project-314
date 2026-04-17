@@ -7,12 +7,11 @@ class LoginPage(BasePage):
         super().__init__(driver, base_url)
         self.actions = LoginActions(driver, base_url)
     
-    
-    def open_login_page(self, base_url):
-        self.open(base_url)
-
 
     def login(self, username, password):
         self.actions.enter_username(username)
         self.actions.enter_password(password)
         self.actions.submit()
+
+    def find_lock_icon(self):
+        return  self.is_visible(LoginLocators.LOCK_ICON)

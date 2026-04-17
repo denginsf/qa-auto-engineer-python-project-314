@@ -1,0 +1,19 @@
+.venv
+.coverage
+coverage.xml
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+coverage.xml
+*.egg-info/
+dist/
+build/
+
+# Ruff
+.ruff_cache/
+.ruff.toml
