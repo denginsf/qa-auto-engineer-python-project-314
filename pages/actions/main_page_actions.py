@@ -14,3 +14,5 @@ class MainPageActions(BasePage):
     def click_on_logout(self):
         self.click(MainPageLocators.LOG_OUT_BUTTON)
     
+    def click_on_users(self):
+        self.click(MainPageLocators.USERS_BUTTON)

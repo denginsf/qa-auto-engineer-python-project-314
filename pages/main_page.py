@@ -14,3 +14,6 @@ class MainPage(BasePage):
     def logout(self):
         self.actions.click_on_profile()
         self.actions.click_on_logout()
+
+    def go_to_users(self):
+        self.actions.click_on_users()

@@ -29,3 +29,7 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    def find_element(self, locator):
+        element = self.wait.until(EC.presence_of_element_located(locator))
+        return element
