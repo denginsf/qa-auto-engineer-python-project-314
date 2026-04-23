@@ -7,5 +7,6 @@ requires-python = ">=3.14"
 dependencies = [
     "allure-pytest>=2.15.3",
     "pytest>=9.0.3",
+    "ruff>=0.15.11",
     "selenium>=4.43.0",
 ]

@@ -14,6 +14,9 @@ class UsersPage(BasePage):
     def save_user(self):
         self.click(UsersLocators.SAVE_USER_BUTTON)
 
+    def delete_user(self):
+        self.click(UsersLocators.DELETE_USER_BUTTON)      
+
     def input_user_data(self, email, first_name, last_name):
         self.enter_user_email(email)
         self.actions.enter_user_first_name(first_name)
@@ -26,11 +29,14 @@ class UsersPage(BasePage):
     def find_error_snackbar(self):
         return self.is_visible(UsersLocators.ERROR_SNACKBAR)
 
-    def find_error_snackbar(self):
-        return self.is_visible(UsersLocators.ERROR_SNACKBAR)
+    def find_delete_snackbar(self):
+        return self.is_visible(UsersLocators.DELETED_SNACKBAR)
 
     def find_user_updated_snackbar(self):
         return self.is_visible(UsersLocators.UPDATED_SNACKBAR)    
+
+    def find_all_users_deleted_snackbar(self):
+        return self.is_visible(UsersLocators.ALL_DELETED_SNACKBAR)
 
     def open_user_creation_form(self):
         self.actions.start_user_creation()
@@ -47,7 +53,7 @@ class UsersPage(BasePage):
 
     def delete_user_email(self):
         self.delete_text(UsersLocators.EMAIL_INPUT)
-
+    
     def users_table_is_loaded(self):
         columns_visible = all([
             self.is_presence(UsersLocators.HEADER_CHECK_BOX),
@@ -55,16 +61,36 @@ class UsersPage(BasePage):
             self.is_visible(UsersLocators.EMAIL_COLUMN),
             self.is_visible(UsersLocators.FIRST_NAME_COLUMN),
             self.is_visible(UsersLocators.LAST_NAME_COLUMN),
-            self.is_visible(UsersLocators.CREATED_AT_COLUMN),
+            self.is_visible(UsersLocators.CREATED_AT_COLUMN)
         ]
         )
         return columns_visible
+
+    def users_table_is_empty(self):
+        empty_table = all([
+            self.is_visible(UsersLocators.EMPTY_STATE),
+            self.is_visible(UsersLocators.EMPTY_STATE_ICON),
+            self.is_visible(UsersLocators.EMPTY_STATE_TITLE),
+            self.is_visible(UsersLocators.EMPTY_STATE_TEXT),
+            self.is_visible(UsersLocators.CREATE_USER_BUTTON)
+        ])
+        return empty_table
+
+    def select_all_users(self):
+        self.find_element(UsersLocators.SELECT_ALL).click()
 
     def get_required_errors_count(self):        
         return len(self.driver.find_elements(*UsersLocators.REQUIRED_ERROR))
 
     def email_validation_error_is_visible(self):
          return self.is_visible(UsersLocators.EMAIL_FORMAT_ERROR)
+
+    def is_user_exist(self, email):
+        try:
+            self.find_element(UsersLocators.get_row_by_email(email))
+            return True
+        except:
+            return False 
 
     def click_on_row(self, email):
         self.find_element(UsersLocators.get_row_by_email(email)).click()

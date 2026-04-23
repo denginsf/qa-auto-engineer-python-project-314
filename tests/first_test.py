@@ -1,7 +1,7 @@
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
-from pages.base_page import BasePage
 from pages.users_page import UsersPage
+
 
 def test_login(driver, base_url):
     start_page = LoginPage(driver, base_url)
@@ -77,3 +77,31 @@ def test_user_update(driver, base_url):
     assert first_name == 'Ivan'
     assert last_name == 'Doe'
     assert users_page.find_user_updated_snackbar()
+
+
+def test_user_delete(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_users()
+    users_page = UsersPage(driver, base_url)
+    users_page.click_on_row('john@google.com')
+    users_page.delete_user()
+    assert users_page.find_delete_snackbar()
+    assert users_page.is_user_exist('john@google.com') == False
+
+
+def test_all_users_delete(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_users()
+    users_page = UsersPage(driver, base_url)
+    users_page.select_all_users()
+    users_page.delete_user()
+    assert users_page.find_all_users_deleted_snackbar()
+    assert users_page.users_table_is_empty() == True
