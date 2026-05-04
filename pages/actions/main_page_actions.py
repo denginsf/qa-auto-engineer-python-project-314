@@ -16,3 +16,6 @@ class MainPageActions(BasePage):
     
     def click_on_users(self):
         self.click(MainPageLocators.USERS_BUTTON)
+
+    def click_on_statuses(self):
+        self.click(MainPageLocators.STATUSES_BUTTON)

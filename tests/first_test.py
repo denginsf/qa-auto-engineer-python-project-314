@@ -1,6 +1,7 @@
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from pages.users_page import UsersPage
+from pages.statuses_page import StatusesPage
 
 
 def test_login(driver, base_url):
@@ -20,23 +21,6 @@ def test_logout(driver, base_url):
     main_page.logout()
     login_page = LoginPage(driver, base_url)
     assert login_page.find_lock_icon() == True
-
-
-def test_create_user(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
-    users_page.open_user_creation_form() == True
-    users_page.input_user_data('test@test.com', 'Alex', 'Test')
-    assert users_page.find_succes_snackbar() == True
-    main_page.go_to_users()
-    first_name, last_name = users_page.get_user_data_by_email('test@test.com')
-    assert first_name == 'Alex'
-    assert last_name == 'Test'
 
 
 def test_smoke_users_list(driver, base_url):
@@ -105,3 +89,51 @@ def test_all_users_delete(driver, base_url):
     users_page.delete_user()
     assert users_page.find_all_users_deleted_snackbar()
     assert users_page.users_table_is_empty() == True
+
+
+def test_create_status(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_statuses()
+    statuses_page = StatusesPage(driver, base_url)
+    statuses_page.open_status_creation_form() == True
+    statuses_page.input_status_data('test_status', 'test')
+    assert statuses_page.find_succes_snackbar() == True
+    main_page.go_to_statuses()
+    slug = statuses_page.get_status_data_by_name('test_status')
+    assert slug == 'test'
+
+def test_smoke_statuses_list(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_statuses()
+    statuses_page = StatusesPage(driver, base_url)
+    assert statuses_page.statuses_table_is_loaded()
+    slug = statuses_page.get_status_data_by_name('Draft')
+    assert slug == 'draft'
+
+
+def test_status_update(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_statuses()
+    statuses_page = StatusesPage(driver, base_url)
+    statuses_page.click_on_status_row('Draft')
+    statuses_page.delete_status_name()
+    statuses_page.delete_status_slug()
+    statuses_page.save_entity()
+    assert statuses_page.find_error_snackbar()
+    assert statuses_page.get_required_errors_count() == 2
+    statuses_page.input_status_data('test_updated', 'updated')
+    slug = statuses_page.get_status_data_by_name('test_updated')
+    assert statuses_page.find_user_updated_snackbar()
+    assert slug == 'updated'

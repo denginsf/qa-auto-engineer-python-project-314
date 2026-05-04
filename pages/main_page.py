@@ -16,3 +16,6 @@ class MainPage(BasePage):
 
     def go_to_users(self):
         self.actions.click_on_users()
+
+    def go_to_statuses(self):
+        self.actions.click_on_statuses()

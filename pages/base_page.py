@@ -1,7 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
 
 class BasePage:
     def __init__(self, driver, base_url):
@@ -48,3 +50,19 @@ class BasePage:
     def find_element(self, locator):
         element = self.wait.until(EC.presence_of_element_located(locator))
         return element
+
+    def save_entity(self):
+        action = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit" and contains(text(), "Save")]')))
+        action.click()
+
+    def find_succes_snackbar(self):
+        return self.is_visible((By.XPATH, '//div[text()="Element created"]'))
+
+    def find_error_snackbar(self):
+        return self.is_visible((By.XPATH, '//div[text()="The form is not valid. Please check for errors"]'))
+    
+    def find_user_updated_snackbar(self):
+        return self.is_visible((By.XPATH, '//div[text()="Element updated"]'))
+
+    def get_required_errors_count(self):        
+        return len(self.driver.find_elements(By.XPATH, '//p[text()="Required"]'))
