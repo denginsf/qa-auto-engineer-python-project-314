@@ -11,32 +11,11 @@ class UsersPage(BasePage):
     def enter_user_email(self, email):
         self.enter_text(UsersLocators.EMAIL_INPUT, email)
 
-    def save_user(self):
-        self.click(UsersLocators.SAVE_USER_BUTTON)
-
-    def delete_user(self):
-        self.click(UsersLocators.DELETE_USER_BUTTON)      
-
     def input_user_data(self, email, first_name, last_name):
         self.enter_user_email(email)
         self.actions.enter_user_first_name(first_name)
         self.actions.enter_user_last_name(last_name)
-        self.save_user()
-
-    def find_succes_snackbar(self):
-        return self.is_visible(UsersLocators.SNACKBAR)
-
-    def find_error_snackbar(self):
-        return self.is_visible(UsersLocators.ERROR_SNACKBAR)
-
-    def find_delete_snackbar(self):
-        return self.is_visible(UsersLocators.DELETED_SNACKBAR)
-
-    def find_user_updated_snackbar(self):
-        return self.is_visible(UsersLocators.UPDATED_SNACKBAR)    
-
-    def find_all_users_deleted_snackbar(self):
-        return self.is_visible(UsersLocators.ALL_DELETED_SNACKBAR)
+        self.save_entity()
 
     def open_user_creation_form(self):
         self.actions.start_user_creation()

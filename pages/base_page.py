@@ -55,14 +55,28 @@ class BasePage:
         action = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit" and contains(text(), "Save")]')))
         action.click()
 
+    def delete_entity(self):
+        action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Delete"]')))
+        action.click()
+
+    def select_all_entitys(self):
+        action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.select-all')))
+        action.click()
+
     def find_succes_snackbar(self):
         return self.is_visible((By.XPATH, '//div[text()="Element created"]'))
 
     def find_error_snackbar(self):
         return self.is_visible((By.XPATH, '//div[text()="The form is not valid. Please check for errors"]'))
     
-    def find_user_updated_snackbar(self):
+    def find_updated_snackbar(self):
         return self.is_visible((By.XPATH, '//div[text()="Element updated"]'))
+
+    def find_deleted_snackbar(self):
+        return self.is_visible((By.XPATH, '//div[text()="Element deleted"]'))
+    
+    def find_all_entitys_deleted_snackbar(self):
+        return self.is_visible((By.XPATH, '//div[contains(text(), "elements deleted")]'))
 
     def get_required_errors_count(self):        
         return len(self.driver.find_elements(By.XPATH, '//p[text()="Required"]'))

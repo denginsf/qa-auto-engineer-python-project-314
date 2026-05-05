@@ -9,7 +9,12 @@ class StatusesLocators:
     STATUS_ID_COLUMN = (By.CSS_SELECTOR, '[data-field="id"]')
     NAME_COLUMN = (By.CSS_SELECTOR, '[data-field="name"]')
     SLUG_COLUMN = (By.CSS_SELECTOR, '.column-slug span')
-    
+    STATUSES_EMPTY_STATE = (By.CSS_SELECTOR, '.RaEmpty-message')
+    STATUSES_EMPTY_STATE_ICON = (By.CSS_SELECTOR, '[data-testid="InboxIcon"]')
+    STATUSES_EMPTY_STATE_TITLE = (By.XPATH, '//p[text()="No Task statuses yet."]')
+    STATUSES_EMPTY_STATE_TEXT = (By.XPATH, '//p[text()="Do you want to add one?"]')
+    CREATE_STATUS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Create"]')
+
     @staticmethod
     def get_row_by_status_name(name):
         return (By.XPATH, f'//td[contains(@class, "column-name")]//span[text()="{name}"]/ancestor::tr')

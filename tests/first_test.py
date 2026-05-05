@@ -2,7 +2,7 @@ from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from pages.users_page import UsersPage
 from pages.statuses_page import StatusesPage
-
+import time
 
 def test_login(driver, base_url):
     start_page = LoginPage(driver, base_url)
@@ -49,18 +49,18 @@ def test_user_update(driver, base_url):
     users_page.delete_user_email()
     users_page.delete_user_first_name()
     users_page.delete_user_last_name()
-    users_page.save_user()
+    users_page.save_entity()
     assert users_page.find_error_snackbar()
     assert users_page.get_required_errors_count() == 3
     users_page.input_user_data('test', 'Ivan', 'Doe')
     assert users_page.email_validation_error_is_visible() == True
     users_page.delete_user_email()
     users_page.enter_user_email('john_changed@google.com')
-    users_page.save_user()
+    users_page.save_entity()
     first_name, last_name = users_page.get_user_data_by_email('john_changed@google.com')
     assert first_name == 'Ivan'
     assert last_name == 'Doe'
-    assert users_page.find_user_updated_snackbar()
+    assert users_page.find_updated_snackbar()
 
 
 def test_user_delete(driver, base_url):
@@ -72,7 +72,7 @@ def test_user_delete(driver, base_url):
     main_page.go_to_users()
     users_page = UsersPage(driver, base_url)
     users_page.click_on_row('john@google.com')
-    users_page.delete_user()
+    users_page.delete_entity()
     assert users_page.find_delete_snackbar()
     assert users_page.is_user_exist('john@google.com') == False
 
@@ -86,8 +86,8 @@ def test_all_users_delete(driver, base_url):
     main_page.go_to_users()
     users_page = UsersPage(driver, base_url)
     users_page.select_all_users()
-    users_page.delete_user()
-    assert users_page.find_all_users_deleted_snackbar()
+    users_page.delete_entity()
+    assert users_page.find_all_entitys_deleted_snackbar()
     assert users_page.users_table_is_empty() == True
 
 
@@ -118,8 +118,7 @@ def test_smoke_statuses_list(driver, base_url):
     slug = statuses_page.get_status_data_by_name('Draft')
     assert slug == 'draft'
 
-
-def test_status_update(driver, base_url):
+def test_user_delete(driver, base_url):
     start_page = LoginPage(driver, base_url)
     start_page.open(base_url)
     start_page.login('admin', 'admin')
@@ -128,12 +127,19 @@ def test_status_update(driver, base_url):
     main_page.go_to_statuses()
     statuses_page = StatusesPage(driver, base_url)
     statuses_page.click_on_status_row('Draft')
-    statuses_page.delete_status_name()
-    statuses_page.delete_status_slug()
-    statuses_page.save_entity()
-    assert statuses_page.find_error_snackbar()
-    assert statuses_page.get_required_errors_count() == 2
-    statuses_page.input_status_data('test_updated', 'updated')
-    slug = statuses_page.get_status_data_by_name('test_updated')
-    assert statuses_page.find_user_updated_snackbar()
-    assert slug == 'updated'
+    statuses_page.delete_entity()
+    assert statuses_page.find_deleted_snackbar()
+    assert statuses_page.is_status_exist('Draft') == False
+
+def test_all_statuses_delete(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_statuses()
+    statuses_page = StatusesPage(driver, base_url)
+    statuses_page.select_all_entitys()
+    statuses_page.delete_entity()
+    assert statuses_page.find_all_entitys_deleted_snackbar()
+    assert statuses_page.statuses_table_is_empty() == True

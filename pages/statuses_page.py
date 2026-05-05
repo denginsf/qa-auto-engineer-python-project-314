@@ -30,6 +30,16 @@ class StatusesPage(BasePage):
         ]
         )
         return columns_visible
+
+    def statuses_table_is_empty(self):
+        empty_table = all([
+            self.is_visible(StatusesLocators.STATUSES_EMPTY_STATE),
+            self.is_visible(StatusesLocators.STATUSES_EMPTY_STATE_ICON),
+            self.is_visible(StatusesLocators.STATUSES_EMPTY_STATE_TITLE),
+            self.is_visible(StatusesLocators.STATUSES_EMPTY_STATE_TEXT),
+            self.is_visible(StatusesLocators.CREATE_STATUS_BUTTON)
+        ])
+        return empty_table
     
     def click_on_status_row(self, name):
         self.find_element(StatusesLocators.get_row_by_status_name(name)).click()
@@ -39,3 +49,10 @@ class StatusesPage(BasePage):
 
     def delete_status_slug(self):
         self.delete_text(StatusesLocators.STATUS_SLUG_INPUT)
+
+    def is_status_exist(self, email):
+        try:
+            self.find_element(StatusesLocators.get_row_by_status_name(name))
+            return True
+        except:
+            return False 
