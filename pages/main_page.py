@@ -19,3 +19,6 @@ class MainPage(BasePage):
 
     def go_to_statuses(self):
         self.actions.click_on_statuses()
+
+    def go_to_labels(self):
+        self.actions.click_on_labels()

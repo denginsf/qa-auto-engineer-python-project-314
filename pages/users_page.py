@@ -17,10 +17,6 @@ class UsersPage(BasePage):
         self.actions.enter_user_last_name(last_name)
         self.save_entity()
 
-    def open_user_creation_form(self):
-        self.actions.start_user_creation()
-        return self.is_visible(UsersLocators.FORM)
-
     def get_user_data_by_email(self, email):
         return self.actions.find_user_data_by_email_colum(email)
 

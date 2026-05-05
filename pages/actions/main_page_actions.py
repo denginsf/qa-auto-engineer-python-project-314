@@ -19,3 +19,6 @@ class MainPageActions(BasePage):
 
     def click_on_statuses(self):
         self.click(MainPageLocators.STATUSES_BUTTON)
+
+    def click_on_labels(self):
+        self.click(MainPageLocators.LABELS_BUTTON)

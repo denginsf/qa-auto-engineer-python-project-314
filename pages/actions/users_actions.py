@@ -5,9 +5,6 @@ class UsersActions(BasePage):
     def __init__(self, driver, base_url):
         super().__init__(driver, base_url)
     
-    def start_user_creation(self):
-        self.click(UsersLocators.CREATE_USER_BUTTON)
-
     def enter_user_first_name(self, first_name):
          self.enter_text(UsersLocators.FIRST_NAME_INPUT, first_name)
 

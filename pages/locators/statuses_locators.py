@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 
 class StatusesLocators:
-    CREATE_STATUS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Create"]')
     USER_CREATION_FORM = (By.CSS_SELECTOR, '.MuiStack-root')
     STATUS_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="name"]')
     STATUS_SLUG_INPUT = (By.CSS_SELECTOR, 'input[name="slug"]')

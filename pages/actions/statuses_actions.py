@@ -5,9 +5,6 @@ class StatusesActions(BasePage):
 
     def __init__(self, driver, base_url):
         super().__init__(driver, base_url)
-        
-    def start_status_creation(self):
-        self.click(StatusesLocators.CREATE_STATUS_BUTTON)
 
     def enter_status_name(self, name):
          self.enter_text(StatusesLocators.STATUS_NAME_INPUT, name)

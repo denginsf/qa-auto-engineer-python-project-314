@@ -8,10 +8,6 @@ class StatusesPage(BasePage):
         super().__init__(driver, base_url)
         self.actions = StatusesActions(driver, base_url)
 
-    def open_status_creation_form(self):
-        self.actions.start_status_creation()
-        return self.is_visible(StatusesLocators.USER_CREATION_FORM)
-
     def input_status_data(self, name, slug):
         self.actions.enter_status_name(name)
         self.actions.enter_status_slug(slug)
