@@ -137,6 +137,25 @@ def test_smoke_statuses_list(driver, base_url):
     slug = statuses_page.get_status_data_by_name('Draft')
     assert slug == 'draft'
 
+def test_status_update(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_statuses()
+    statuses_page = StatusesPage(driver, base_url)
+    statuses_page.click_on_status_row('Draft')
+    statuses_page.delete_status_name()
+    statuses_page.delete_status_slug()
+    statuses_page.save_entity()
+    assert statuses_page.find_error_snackbar()
+    assert statuses_page.get_required_errors_count() == 2
+    statuses_page.input_status_data('test_updated', 'updated')
+    slug = statuses_page.get_status_data_by_name('test_updated')
+    assert statuses_page.find_updated_snackbar()
+    assert slug == 'updated'
+
 def test_status_delete(driver, base_url):
     start_page = LoginPage(driver, base_url)
     start_page.open(base_url)
@@ -172,7 +191,69 @@ def test_create_label(driver, base_url):
     main_page.go_to_labels()
     labels_page = LabelsPage(driver, base_url)
     labels_page.open_entity_creation_form() == True
-    labels_page.input_status_data('test_label')
+    labels_page.input_label_data('test_label')
     assert labels_page.find_succes_snackbar() == True
     main_page.go_to_labels()
     assert labels_page.is_label_exist('test_label') == True
+
+def test_smoke_labels_list(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_labels()
+    labels_page = LabelsPage(driver, base_url)
+    assert labels_page.labels_table_is_loaded()
+    labels_list = labels_page.get_all_labels_data()
+    assert labels_list == [
+    {"id": "1", "name": "bug", "createdAt": "21.12.2023, 03:00:00"},
+    {"id": "2", "name": "feature", "createdAt": "21.12.2023, 03:00:00"},
+    {"id": "3", "name": "enhancement", "createdAt": "22.12.2023, 03:00:00"},
+    {"id": "4", "name": "task", "createdAt": "23.12.2023, 03:00:00"},
+    {"id": "5", "name": "critical", "createdAt": "24.12.2023, 03:00:00"}
+    ]
+
+def test_update_label(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_labels()
+    labels_page = LabelsPage(driver, base_url)
+    labels_page.click_on_label_row('task')
+    labels_page.delete_label_name()
+    labels_page.save_entity()
+    assert labels_page.find_error_snackbar()
+    assert labels_page.get_required_errors_count() == 1
+    labels_page.input_label_data('test_label')
+    assert labels_page.find_updated_snackbar()
+    assert labels_page.is_label_exist('test_label') == True
+
+
+def test_label_delete(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_labels()
+    labels_page = LabelsPage(driver, base_url)
+    labels_page.click_on_label_row('feature')
+    labels_page.delete_entity()
+    assert labels_page.find_deleted_snackbar()
+    assert labels_page.is_label_exist('feature') == False
+
+def test_all_labels_delete(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_labels()
+    labels_page = LabelsPage(driver, base_url)
+    labels_page.select_all_entitys()
+    labels_page.delete_entity()
+    assert labels_page.find_all_entitys_deleted_snackbar()
+    assert labels_page.labels_table_is_empty() == True

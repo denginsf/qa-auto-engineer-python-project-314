@@ -8,4 +8,3 @@ class LabelsActions(BasePage):
 
     def enter_label_name(self, name):
          self.enter_text(LabelsLocators.LABEL_NAME_INPUT, name)
-    

@@ -51,12 +51,15 @@ class BasePage:
         element = self.wait.until(EC.presence_of_element_located(locator))
         return element
 
+    def find_elements(self, locator):
+        return self.driver.find_elements(*locator)
+
     def start_entity_creation(self):
         action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Create"]')))
         action.click()
 
     def open_entity_creation_form(self):
-        self.actions.start_entity_creation()
+        self.start_entity_creation()
         return self.is_visible((By.CSS_SELECTOR, '.MuiStack-root'))
 
     def save_entity(self):
@@ -88,3 +91,6 @@ class BasePage:
 
     def get_required_errors_count(self):        
         return len(self.driver.find_elements(By.XPATH, '//p[text()="Required"]'))
+    
+    def find_in_element(self, element, locator):
+        return element.find_element(*locator)
