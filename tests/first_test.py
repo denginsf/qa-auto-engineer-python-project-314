@@ -4,7 +4,7 @@ from pages.users_page import UsersPage
 from pages.statuses_page import StatusesPage
 from pages.labels_page import LabelsPage
 from pages.tasks_page import TasksPage
-import time
+
 
 def test_login(driver, base_url):
     start_page = LoginPage(driver, base_url)
@@ -231,6 +231,7 @@ def test_update_label(driver, base_url):
     assert labels_page.find_updated_snackbar()
     assert labels_page.is_label_exist('test_label') == True
 
+
 def test_label_delete(driver, base_url):
     start_page = LoginPage(driver, base_url)
     start_page.open(base_url)
@@ -298,3 +299,59 @@ def test_smoke_tasks_list(driver, base_url):
         'Published': [{'Title': 'Task 4', 'Content': 'Description of task 4', 'Index': '3203', 'Edit_button_present': True, 'Show_button_present': True}, 
                       {'Title': 'Task 15', 'Content': 'Description of task 15', 'Index': '3260', 'Edit_button_present': True, 'Show_button_present': True}, 
                       {'Title': 'Task 10', 'Content': 'Description of task 10', 'Index': '3329', 'Edit_button_present': True, 'Show_button_present': True}]}
+
+def test_tasks_filtarion_list(driver, base_url):
+    start_page = LoginPage(driver, base_url)
+    start_page.open(base_url)
+    start_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    main_page.go_to_tasks()
+    tasks_page = TasksPage(driver, base_url)
+    assert tasks_page.task_table_is_loaded()
+    tasks_list = tasks_page.get_all_statuses_data()
+    assert tasks_list == {
+        'Draft': [{'Title': 'Task 11', 'Content': 'Description of task 11', 'Index': '3220', 'Edit_button_present': True, 'Show_button_present': True}, 
+                  {'Title': 'Task 5', 'Content': 'Description of task 5', 'Index': '3224', 'Edit_button_present': True, 'Show_button_present': True}, 
+                  {'Title': 'Task 6', 'Content': 'Description of task 6', 'Index': '3245', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'To Review': [{'Title': 'Task 2', 'Content': 'Description of task 2', 'Index': '3161', 'Edit_button_present': True, 'Show_button_present': True}, 
+                      {'Title': 'Task 12', 'Content': 'Description of task 12', 'Index': '3230', 'Edit_button_present': True, 'Show_button_present': True}, 
+                      {'Title': 'Task 7', 'Content': 'Description of task 7', 'Index': '3266', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'To Be Fixed': [{'Title': 'Task 1', 'Content': 'Description of task 1', 'Index': '3140', 'Edit_button_present': True, 'Show_button_present': True}, 
+                        {'Title': 'Task 13', 'Content': 'Description of task 13', 'Index': '3240', 'Edit_button_present': True, 'Show_button_present': True}, 
+                        {'Title': 'Task 8', 'Content': 'Description of task 8', 'Index': '3287', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'To Publish': [{'Title': 'Task 3', 'Content': 'Description of task 3', 'Index': '3182', 'Edit_button_present': True, 'Show_button_present': True}, 
+                       {'Title': 'Task 14', 'Content': 'Description of task 14', 'Index': '3250', 'Edit_button_present': True, 'Show_button_present': True}, 
+                       {'Title': 'Task 9', 'Content': 'Description of task 9', 'Index': '3308', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'Published': [{'Title': 'Task 4', 'Content': 'Description of task 4', 'Index': '3203', 'Edit_button_present': True, 'Show_button_present': True}, 
+                      {'Title': 'Task 15', 'Content': 'Description of task 15', 'Index': '3260', 'Edit_button_present': True, 'Show_button_present': True}, 
+                      {'Title': 'Task 10', 'Content': 'Description of task 10', 'Index': '3329', 'Edit_button_present': True, 'Show_button_present': True}]}
+    tasks_page.filter_by_assignee('jack@yahoo.com')
+    filtered_tasks_list = tasks_page.get_all_statuses_data()
+    assert filtered_tasks_list == {
+        'Draft': [], 
+        'To Review': [{'Title': 'Task 12', 'Content': 'Description of task 12', 'Index': '3230', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'To Be Fixed': [{'Title': 'Task 13', 'Content': 'Description of task 13', 'Index': '3240', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'To Publish': [{'Title': 'Task 3', 'Content': 'Description of task 3', 'Index': '3182', 'Edit_button_present': True, 'Show_button_present': True}, 
+                       {'Title': 'Task 14', 'Content': 'Description of task 14', 'Index': '3250', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'Published': [{'Title': 'Task 4', 'Content': 'Description of task 4', 'Index': '3203', 'Edit_button_present': True, 'Show_button_present': True}]
+        }
+    tasks_page.filter_by_status('To Publish')
+    filtered_tasks_list = tasks_page.get_all_statuses_data()
+    assert filtered_tasks_list == {
+        'Draft': [], 
+        'To Review': [], 
+        'To Be Fixed': [], 
+        'To Publish': [{'Title': 'Task 3', 'Content': 'Description of task 3', 'Index': '3182', 'Edit_button_present': True, 'Show_button_present': True}, 
+                    {'Title': 'Task 14', 'Content': 'Description of task 14', 'Index': '3250', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'Published': []
+        }
+    tasks_page.filter_by_label('bug')
+    filtered_tasks_list = tasks_page.get_all_statuses_data()
+    assert filtered_tasks_list == {
+        'Draft': [], 
+        'To Review': [], 
+        'To Be Fixed': [], 
+        'To Publish': [{'Title': 'Task 3', 'Content': 'Description of task 3', 'Index': '3182', 'Edit_button_present': True, 'Show_button_present': True}], 
+        'Published': []
+        }

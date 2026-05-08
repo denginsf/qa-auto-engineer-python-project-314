@@ -1,7 +1,6 @@
 from pages.actions.tasks_actions import TasksActions
 from pages.locators.tasks_locators import TasksLocators
 from pages.base_page import BasePage
-import time
 
 
 class TasksPage(BasePage):
@@ -55,3 +54,18 @@ class TasksPage(BasePage):
                 tasks_list.append(card_data)
             result[status_name] = tasks_list
         return result
+    
+    def filter_by_assignee(self, assignee):
+        count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
+        self.actions.select_assignee(assignee)
+        self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
+
+    def filter_by_status(self, status):
+        count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
+        self.actions.select_status(status)
+        self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
+
+    def filter_by_label(self, label):
+        count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
+        self.actions.select_label(label)
+        self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
