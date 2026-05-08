@@ -22,3 +22,6 @@ class MainPage(BasePage):
 
     def go_to_labels(self):
         self.actions.click_on_labels()
+
+    def go_to_tasks(self):
+        self.actions.click_on_tasks()

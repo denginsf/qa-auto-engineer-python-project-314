@@ -7,3 +7,4 @@ class MainPageLocators:
     USERS_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Users")]')
     STATUSES_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Task statuses")]')
     LABELS_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Labels")]')
+    TASKS_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Tasks")]')

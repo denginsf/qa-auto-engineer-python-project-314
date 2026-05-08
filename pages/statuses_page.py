@@ -46,7 +46,7 @@ class StatusesPage(BasePage):
     def delete_status_slug(self):
         self.delete_text(StatusesLocators.STATUS_SLUG_INPUT)
 
-    def is_status_exist(self, email):
+    def is_status_exist(self, name):
         try:
             self.find_element(StatusesLocators.get_row_by_status_name(name))
             return True

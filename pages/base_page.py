@@ -2,6 +2,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 
 
@@ -18,6 +19,9 @@ class BasePage:
         action = self.wait.until(EC.element_to_be_clickable(locator))
         action.click()
 
+    def esc(self):
+         ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
+
     def delete_text(self, locator):
         action = self.wait.until(EC.element_to_be_clickable(locator))
         action.click()
@@ -26,6 +30,7 @@ class BasePage:
 
     def enter_text(self, locator, text):
         action = self.wait.until(EC.visibility_of_element_located(locator))
+        action.click()
         action.clear()
         action.send_keys(text)
 

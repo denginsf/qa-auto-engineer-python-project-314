@@ -22,3 +22,6 @@ class MainPageActions(BasePage):
 
     def click_on_labels(self):
         self.click(MainPageLocators.LABELS_BUTTON)
+
+    def click_on_tasks(self):
+        self.click(MainPageLocators.TASKS_BUTTON)
