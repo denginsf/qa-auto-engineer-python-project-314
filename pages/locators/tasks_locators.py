@@ -31,8 +31,12 @@ class TasksLocators:
     
     @staticmethod
     def get_task_in_status_column(status, task_title):
-        return (By.XPATH, f"//h6[text()='{status}']/ancestor::div[@data-rfd-droppable-id='1']//div[text()='{task_title}']")
+        return (By.XPATH, f"//h6[text()='{status}']/ancestor::div[contains(@class, 'css-1xphtog')]//div[contains(@class, 'MuiCard-root')]//div[text()='{task_title}']")
     
     @staticmethod   
     def get_status_column_by_name(column_name):
         return (By.XPATH, f"//h6[text()='{column_name}']")
+    
+    @staticmethod    
+    def get_task_card_by_name(task_name):
+        return (By.XPATH, f"//div[contains(@class, 'MuiCard-root')][.//div[text()='{task_name}']]")

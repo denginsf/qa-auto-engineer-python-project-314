@@ -16,12 +16,29 @@ class TasksPage(BasePage):
         self.actions.select_label(label)
         self.save_entity()
 
+    def change_assignee(self, assignee):
+        self.actions.select_assignee(assignee)
+    
+    def add_label(self, label):
+        self.actions.select_label(label)
+
+    def change_status(self, status):
+        self.actions.select_status(status)
+
+    def change_content(self, content):
+        self.delete_text(TasksLocators.CONTENT_INPUT)
+        self.actions.enter_task_content(content)
+        
+    def change_title(self, title):
+        self.delete_text(TasksLocators.TITLE_INPUT)
+        self.actions.enter_task_title(title)
+
     def get_task_id_value(self):
         return self.find_element(TasksLocators.TASK_ID_VALUE).text
     
     def is_task_present_in_satus(self, status, task_title):
         try:
-            self.is_visible(TasksLocators.get_task_in_status_column(status, task_title))
+            self.find_element(TasksLocators.get_task_in_status_column(status, task_title))
             return True
         except:
             return False
@@ -69,3 +86,7 @@ class TasksPage(BasePage):
         count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
         self.actions.select_label(label)
         self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
+
+    def start_task_edit_by_name(self, task_name):
+        task_card = self.find_element(TasksLocators.get_task_card_by_name(task_name))
+        self.find_in_element(task_card, TasksLocators.EDIT_BUTTON).click()
