@@ -1,13 +1,19 @@
 from selenium.webdriver.common.by import By
 
 class StatusesLocators:
+    STATUSES_TABLE_ROWS = (By.CSS_SELECTOR,'.MuiTableBody-root tr')
+    STATUS_ID_CELL = (By.CSS_SELECTOR, '.column-id span')
+    SLUG_CELL = (By.CSS_SELECTOR, '.column-slug span')
+    SLUG_COLUMN = (By.CSS_SELECTOR, '[data-field="slug"]')
+    CREATED_AT_COLUMN = (By.CSS_SELECTOR, '[data-field="createdAt"]')
+    STATUS_NAME_CELL = (By.CSS_SELECTOR, '.column-name span')
+    CREATED_AT_CELL = (By.CSS_SELECTOR, '.column-createdAt span')
     USER_CREATION_FORM = (By.CSS_SELECTOR, '.MuiStack-root')
     STATUS_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="name"]')
     STATUS_SLUG_INPUT = (By.CSS_SELECTOR, 'input[name="slug"]')
     STATUS_HEADER_CHECK_BOX = (By.CSS_SELECTOR, '.select-all input')
     STATUS_ID_COLUMN = (By.CSS_SELECTOR, '[data-field="id"]')
     NAME_COLUMN = (By.CSS_SELECTOR, '[data-field="name"]')
-    SLUG_COLUMN = (By.CSS_SELECTOR, '.column-slug span')
     STATUSES_EMPTY_STATE = (By.CSS_SELECTOR, '.RaEmpty-message')
     STATUSES_EMPTY_STATE_ICON = (By.CSS_SELECTOR, '[data-testid="InboxIcon"]')
     STATUSES_EMPTY_STATE_TITLE = (By.XPATH, '//p[text()="No Task statuses yet."]')

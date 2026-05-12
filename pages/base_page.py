@@ -91,7 +91,7 @@ class BasePage:
     def find_deleted_snackbar(self):
         return self.is_visible((By.XPATH, '//div[text()="Element deleted"]'))
     
-    def find_all_entitys_deleted_snackbar(self):
+    def find_all_entities_deleted_snackbar(self):
         return self.is_visible((By.XPATH, '//div[contains(text(), "elements deleted")]'))
 
     def get_required_errors_count(self):        

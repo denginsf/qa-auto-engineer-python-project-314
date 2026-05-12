@@ -1,6 +1,7 @@
 from pages.actions.statuses_actions import StatusesActions
 from pages.locators.statuses_locators import StatusesLocators
 from pages.base_page import BasePage
+from selenium.common.exceptions import TimeoutException
 
 class StatusesPage(BasePage):
 
@@ -8,24 +9,40 @@ class StatusesPage(BasePage):
         super().__init__(driver, base_url)
         self.actions = StatusesActions(driver, base_url)
 
+
     def input_status_data(self, name, slug):
         self.actions.enter_status_name(name)
         self.actions.enter_status_slug(slug)
         self.save_entity()
 
-    def get_status_data_by_name(self, name):
-        return self.actions.find_status_data_by_name_colum(name)
 
+    def delete_status_name(self):
+        self.actions.delete_status_name()
+
+
+    def delete_status_slug(self):
+        self.actions.delete_status_slug()
+
+
+    def get_status_data_by_name(self, name):
+        return self.actions.find_status_data_by_name_column(name)
+
+
+    def get_all_statuses_data(self):
+        return self.actions.find_all_status_data()
+    
     
     def statuses_table_is_loaded(self):
         columns_visible = all([
             self.is_presence(StatusesLocators.STATUS_HEADER_CHECK_BOX),
             self.is_visible(StatusesLocators.STATUS_ID_COLUMN),
             self.is_visible(StatusesLocators.NAME_COLUMN),
-            self.is_visible(StatusesLocators.SLUG_COLUMN)
+            self.is_visible(StatusesLocators.SLUG_COLUMN),
+            self.is_visible(StatusesLocators.CREATED_AT_COLUMN)
         ]
         )
         return columns_visible
+
 
     def statuses_table_is_empty(self):
         empty_table = all([
@@ -37,18 +54,14 @@ class StatusesPage(BasePage):
         ])
         return empty_table
     
+
     def click_on_status_row(self, name):
         self.find_element(StatusesLocators.get_row_by_status_name(name)).click()
 
-    def delete_status_name(self):
-        self.delete_text(StatusesLocators.STATUS_NAME_INPUT)
-
-    def delete_status_slug(self):
-        self.delete_text(StatusesLocators.STATUS_SLUG_INPUT)
 
     def is_status_exist(self, name):
         try:
             self.find_element(StatusesLocators.get_row_by_status_name(name))
             return True
-        except:
-            return False 
+        except TimeoutException:
+            return False

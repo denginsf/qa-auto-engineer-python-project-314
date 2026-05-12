@@ -54,7 +54,7 @@ class UsersActions(BasePage):
         for row in rows:
             try:
                 created_at = row.find_element(*UsersLocators.CREATED_AT_CELL).text
-            except TimeoutException:
+            except NoSuchElementException:
                 created_at = "Не задана"
             raw_data = {
                     "id": row.find_element(*UsersLocators.USER_ID_CELL).text,
