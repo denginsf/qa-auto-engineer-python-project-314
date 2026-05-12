@@ -2,7 +2,8 @@ import os
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
+from pages.login_page import LoginPage
+from pages.main_page import MainPage
 
 @pytest.fixture
 def base_url():
@@ -16,3 +17,12 @@ def driver():
     driver = webdriver.Chrome(options=opts)
     yield driver
     driver.quit()
+
+@pytest.fixture
+def logged_in_main_page(driver, base_url):
+    login_page = LoginPage(driver, base_url)
+    login_page.open(base_url)
+    login_page.login('admin', 'admin')
+    main_page = MainPage(driver, base_url)
+    assert main_page.title() == 'Welcome to the administration'
+    return main_page

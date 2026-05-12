@@ -7,7 +7,6 @@ class UsersLocators:
     EMAIL_INPUT = (By.CSS_SELECTOR, 'input[name="email"]')
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="firstName"]')
     LAST_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="lastName"]')
-    SAVE_USER_BUTTON = (By.XPATH, '//button[@type="submit" and contains(text(), "Save")]')
     SNACKBAR = (By.XPATH, '//div[text()="Element created"]')
     ERROR_SNACKBAR = (By.XPATH, '//div[text()="The form is not valid. Please check for errors"]')
     UPDATED_SNACKBAR = (By.XPATH, '//div[text()="Element updated"]')
@@ -15,9 +14,12 @@ class UsersLocators:
     ALL_DELETED_SNACKBAR = (By.XPATH, '//div[contains(text(), "elements deleted")]')
 
     #Страница юзеров
+    USERS_TABLE_ROWS = (By.CSS_SELECTOR,'.MuiTableBody-root tr')
     EMAIL_CELL = (By.CSS_SELECTOR, '.column-email span')
+    USER_ID_CELL = (By.CSS_SELECTOR, '.column-id span')
     FIRST_NAME_CELL = (By.CSS_SELECTOR, '.column-firstName span')
     LAST_NAME_CELL = (By.CSS_SELECTOR, '.column-lastName span')
+    CREATED_AT_CELL = (By.CSS_SELECTOR, '.column-createdAt span')
     CREATE_USER_BUTTON = (By.CSS_SELECTOR, '[aria-label="Create"]')
     DELETE_USER_BUTTON = (By.CSS_SELECTOR, '[aria-label="Delete"]')
     HEADER_CHECK_BOX = (By.CSS_SELECTOR, '.select-all input')
@@ -33,7 +35,7 @@ class UsersLocators:
     EMPTY_STATE_ICON = (By.CSS_SELECTOR, '[data-testid="InboxIcon"]')
     EMPTY_STATE_TITLE = (By.XPATH, '//p[text()="No Users yet."]')
     EMPTY_STATE_TEXT = (By.XPATH, '//p[text()="Do you want to add one?"]')
-    
+
     @staticmethod
     def get_row_by_email(email):
         return (By.XPATH, f'//span[text()="{email}"]/ancestor::tr')

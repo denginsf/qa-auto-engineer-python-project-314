@@ -75,11 +75,11 @@ class BasePage:
         action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Delete"]')))
         action.click()
 
-    def select_all_entitys(self):
+    def select_all_entities(self):
         action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.select-all')))
         action.click()
 
-    def find_succes_snackbar(self):
+    def find_success_snackbar(self):
         return self.is_visible((By.XPATH, '//div[text()="Element created"]'))
 
     def find_error_snackbar(self):

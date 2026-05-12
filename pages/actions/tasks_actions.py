@@ -4,7 +4,7 @@ from pages.base_page import BasePage
 class TasksActions(BasePage):
     def __init__(self, driver, base_url):
         super().__init__(driver, base_url)
-    
+
 
     def enter_task_title(self, title):
          self.enter_text(TasksLocators.TITLE_INPUT, title)
@@ -46,4 +46,3 @@ class TasksActions(BasePage):
             if not self.is_visible(TasksLocators.get_status_column_by_name(column)):
                 return False
         return True
-    
