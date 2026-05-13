@@ -1,6 +1,7 @@
+from pages.locators.base_locators import BaseLocators
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -12,15 +13,19 @@ class BasePage:
         self.base_url = base_url
         self.wait = WebDriverWait(driver, 10)
 
+
     def open(self, base_url):
         self.driver.get(base_url)
+
 
     def click(self, locator):
         action = self.wait.until(EC.element_to_be_clickable(locator))
         action.click()
 
+
     def esc(self):
          ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
+
 
     def delete_text(self, locator):
         action = self.wait.until(EC.element_to_be_clickable(locator))
@@ -28,15 +33,18 @@ class BasePage:
         action.send_keys(Keys.SHIFT + Keys.HOME)
         action.send_keys(Keys.DELETE)
 
+
     def enter_text(self, locator, text):
         action = self.wait.until(EC.visibility_of_element_located(locator))
         action.click()
         action.clear()
         action.send_keys(text)
 
+
     def text_of_element(self, locator):
         action = self.wait.until(EC.visibility_of_element_located(locator))
         return action.text
+
 
     def is_visible(self, locator):
         try:
@@ -45,6 +53,7 @@ class BasePage:
         except TimeoutException:
             return False
 
+
     def is_presence(self, locator):
         try:
             self.wait.until(EC.presence_of_element_located(locator))
@@ -52,50 +61,72 @@ class BasePage:
         except TimeoutException:
             return False
 
+
     def find_element(self, locator):
         element = self.wait.until(EC.presence_of_element_located(locator))
         return element
 
+
     def find_elements(self, locator):
         return self.driver.find_elements(*locator)
 
+
     def start_entity_creation(self):
-        action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Create"]')))
+        action = self.wait.until(EC.element_to_be_clickable(BaseLocators.CREATE_BUTTON))
         action.click()
+
 
     def open_entity_creation_form(self):
         self.start_entity_creation()
-        return self.is_visible((By.CSS_SELECTOR, '.MuiStack-root'))
+        return self.is_visible(BaseLocators.FORM)
+
 
     def save_entity(self):
-        action = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit" and contains(text(), "Save")]')))
+        action = self.wait.until(EC.element_to_be_clickable(BaseLocators.SAVE_BUTTON))
         action.click()
+
 
     def delete_entity(self):
-        action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Delete"]')))
+        action = self.wait.until(EC.element_to_be_clickable(BaseLocators.DELETE_BUTTON))
         action.click()
+
 
     def select_all_entities(self):
-        action = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.select-all')))
+        action = self.wait.until(EC.element_to_be_clickable(BaseLocators.SELECT_ALL))
         action.click()
 
+
     def find_success_snackbar(self):
-        return self.is_visible((By.XPATH, '//div[text()="Element created"]'))
+        return self.is_visible(BaseLocators.SUCCESS_SNACKBAR)
+
 
     def find_error_snackbar(self):
-        return self.is_visible((By.XPATH, '//div[text()="The form is not valid. Please check for errors"]'))
+        return self.is_visible(BaseLocators.ERROR_SNACKBAR)
     
+
     def find_updated_snackbar(self):
-        return self.is_visible((By.XPATH, '//div[text()="Element updated"]'))
+        return self.is_visible(BaseLocators.UPDATED_SNACKBAR)
+
 
     def find_deleted_snackbar(self):
-        return self.is_visible((By.XPATH, '//div[text()="Element deleted"]'))
+        return self.is_visible(BaseLocators.DELETED_SNACKBAR)
     
+
     def find_all_entities_deleted_snackbar(self):
-        return self.is_visible((By.XPATH, '//div[contains(text(), "elements deleted")]'))
+        return self.is_visible(BaseLocators.ALL_DELETED_SNACKBAR)
+
 
     def get_required_errors_count(self):        
-        return len(self.driver.find_elements(By.XPATH, '//p[text()="Required"]'))
+        return len(self.driver.find_elements(*BaseLocators.REQUIRED_ERROR))
     
+
     def find_in_element(self, element, locator):
         return element.find_element(*locator)
+    
+
+    def is_visible_in_element(self, parent, locator):
+        try:
+            parent.find_element(*locator)
+            return True
+        except NoSuchElementException:
+            return False

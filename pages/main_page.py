@@ -10,18 +10,22 @@ class MainPage(BasePage):
     def title(self):
         return self.actions.get_title()
 
+
     def logout(self):
-        self.actions.click_on_profile()
-        self.actions.click_on_logout()
+        self.actions.logout()
+
 
     def go_to_users(self):
         self.actions.click_on_users()
 
+
     def go_to_statuses(self):
         self.actions.click_on_statuses()
 
+
     def go_to_labels(self):
         self.actions.click_on_labels()
+
 
     def go_to_tasks(self):
         self.actions.click_on_tasks()
