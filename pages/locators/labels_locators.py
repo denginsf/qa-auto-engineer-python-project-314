@@ -5,7 +5,6 @@ class LabelsLocators:
         LABEL_HEADER_CHECK_BOX = (By.CSS_SELECTOR, '.select-all input')
         LABEL_ID_COLUMN = (By.CSS_SELECTOR, '[data-field="id"]')
         LABEL_NAME_COLUMN = (By.CSS_SELECTOR, '[data-field="name"]')
-        LAST_NAME_COLUMN = (By.CSS_SELECTOR, '[data-field="lastName"]')
         LABEL_CREATED_AT_COLUMN = (By.CSS_SELECTOR, '[data-field="createdAt"]')
         LABEL_ID_CELL = (By.CSS_SELECTOR, '.column-id span')
         LABEL_NAME_CELL = (By.CSS_SELECTOR, '.column-name span')

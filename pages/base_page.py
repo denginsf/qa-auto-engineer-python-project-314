@@ -4,7 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
 
 
 class BasePage:
@@ -130,3 +129,8 @@ class BasePage:
             return True
         except NoSuchElementException:
             return False
+        
+        
+    def is_save_button_disabled(self):
+        button = self.find_element(BaseLocators.SAVE_BUTTON)
+        return button.get_attribute('disabled') is not None

@@ -14,15 +14,10 @@ def test_login(driver, base_url):
     assert main_page.title() == 'Welcome to the administration'
 
 
-def test_logout(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.logout()
+def test_logout(driver, base_url, logged_in_main_page):
+    logged_in_main_page.logout()
     login_page = LoginPage(driver, base_url)
-    assert login_page.find_lock_icon() == True
+    assert login_page.find_lock_icon()
 
 
 def test_create_user(driver, base_url, logged_in_main_page):
@@ -259,6 +254,18 @@ def test_update_task(driver, base_url, logged_in_main_page):
         'To Publish': [],
         'Published': [{'Title': 'Changed', 'Content': 'Changed content', 'Index': '3220', 'Edit_button_present': True, 'Show_button_present': True}]
         }
+
+
+def test_task_creation_form_validation(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_tasks()
+    tasks_page = TasksPage(driver, base_url)
+    assert tasks_page.open_entity_creation_form()
+    assert tasks_page.is_save_button_disabled()
+    tasks_page.change_content('Changed content')
+    assert not tasks_page.is_save_button_disabled()
+    tasks_page.save_entity()
+    assert tasks_page.find_error_snackbar()
+    assert tasks_page.get_required_errors_count() == 3
 
 
 def test_smoke_tasks_list(driver, base_url, logged_in_main_page):

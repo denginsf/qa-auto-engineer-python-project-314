@@ -8,7 +8,6 @@ class StatusesLocators:
     CREATED_AT_COLUMN = (By.CSS_SELECTOR, '[data-field="createdAt"]')
     STATUS_NAME_CELL = (By.CSS_SELECTOR, '.column-name span')
     CREATED_AT_CELL = (By.CSS_SELECTOR, '.column-createdAt span')
-    USER_CREATION_FORM = (By.CSS_SELECTOR, '.MuiStack-root')
     STATUS_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="name"]')
     STATUS_SLUG_INPUT = (By.CSS_SELECTOR, 'input[name="slug"]')
     STATUS_HEADER_CHECK_BOX = (By.CSS_SELECTOR, '.select-all input')

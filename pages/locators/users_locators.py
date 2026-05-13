@@ -7,11 +7,7 @@ class UsersLocators:
     EMAIL_INPUT = (By.CSS_SELECTOR, 'input[name="email"]')
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="firstName"]')
     LAST_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="lastName"]')
-    SNACKBAR = (By.XPATH, '//div[text()="Element created"]')
-    ERROR_SNACKBAR = (By.XPATH, '//div[text()="The form is not valid. Please check for errors"]')
-    UPDATED_SNACKBAR = (By.XPATH, '//div[text()="Element updated"]')
-    DELETED_SNACKBAR = (By.XPATH, '//div[text()="Element deleted"]')
-    ALL_DELETED_SNACKBAR = (By.XPATH, '//div[contains(text(), "elements deleted")]')
+
 
     #Страница юзеров
     USERS_TABLE_ROWS = (By.CSS_SELECTOR,'.MuiTableBody-root tr')

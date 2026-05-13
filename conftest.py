@@ -27,5 +27,7 @@ def logged_in_main_page(driver, base_url):
     login_page.open(base_url)
     login_page.login('admin', 'admin')
     main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
+    title = main_page.title()
+    if main_page.title() != 'Welcome to the administration':
+        raise RuntimeError(f'Login failed. Expected title "Welcome to the administration", got "{title}"')
     return main_page
