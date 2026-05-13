@@ -164,27 +164,19 @@ def test_all_statuses_delete(driver, base_url, logged_in_main_page):
     assert statuses_page.statuses_table_is_empty()
 
 
-def test_create_label(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_labels()
+def test_create_label(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_labels()
     labels_page = LabelsPage(driver, base_url)
-    labels_page.open_entity_creation_form() == True
+    labels_page.open_entity_creation_form()
     labels_page.input_label_data('test_label')
-    assert labels_page.find_success_snackbar() == True
-    main_page.go_to_labels()
-    assert labels_page.is_label_exist('test_label') == True
+    assert labels_page.find_success_snackbar()
+    logged_in_main_page.go_to_labels()
+    label_data = labels_page.get_label_data_by_name('test_label')
+    assert label_data == {'id': '6', 'name': 'test_label', 'createdAt': 'Дата задана'}
 
-def test_smoke_labels_list(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_labels()
+
+def test_smoke_labels_list(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_labels()
     labels_page = LabelsPage(driver, base_url)
     assert labels_page.labels_table_is_loaded()
     labels_list = labels_page.get_all_labels_data()
@@ -196,72 +188,59 @@ def test_smoke_labels_list(driver, base_url):
     {"id": "5", "name": "critical", "createdAt": "24.12.2023, 03:00:00"}
     ]
 
-def test_update_label(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_labels()
+
+def test_label_update_validation(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_labels()
     labels_page = LabelsPage(driver, base_url)
     labels_page.click_on_label_row('task')
     labels_page.delete_label_name()
     labels_page.save_entity()
     assert labels_page.find_error_snackbar()
     assert labels_page.get_required_errors_count() == 1
-    labels_page.input_label_data('test_label')
+
+
+def test_update_label(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_labels()
+    labels_page = LabelsPage(driver, base_url)
+    labels_page.click_on_label_row('task')
+    labels_page.input_label_data('updated_label')
     assert labels_page.find_updated_snackbar()
-    assert labels_page.is_label_exist('test_label') == True
+    label_data = labels_page.get_label_data_by_name('updated_label')
+    assert label_data == {'id': '4', 'name': 'updated_label', 'createdAt': 'Дата задана'}
 
 
-def test_label_delete(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_labels()
+def test_label_delete(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_labels()
     labels_page = LabelsPage(driver, base_url)
     labels_page.click_on_label_row('feature')
     labels_page.delete_entity()
     assert labels_page.find_deleted_snackbar()
-    assert labels_page.is_label_exist('feature') == False
+    assert not labels_page.is_label_exist('feature')
 
-def test_all_labels_delete(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_labels()
+
+def test_all_labels_delete(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_labels()
     labels_page = LabelsPage(driver, base_url)
     labels_page.select_all_entities()
     labels_page.delete_entity()
     assert labels_page.find_all_entities_deleted_snackbar()
-    assert labels_page.labels_table_is_empty() == True
+    assert labels_page.labels_table_is_empty()
 
-def test_create_task(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_tasks()
+
+
+def test_create_task(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_tasks()
     tasks_page = TasksPage(driver, base_url)
-    assert tasks_page.open_entity_creation_form() == True
+    assert tasks_page.open_entity_creation_form()
     tasks_page.create_task('emily@example.com', 'Test task', 'Test Content', 'Draft', 'critical')
-    assert tasks_page.find_success_snackbar() == True
+    assert tasks_page.find_success_snackbar()
     assert tasks_page.get_task_id_value() == '16'
-    main_page.go_to_tasks()
-    assert tasks_page.is_task_present_in_satus('Draft', 'Test task') == True
+    logged_in_main_page.go_to_tasks()
+    assert tasks_page.is_task_present_in_satus('Draft', 'Test task')
 
-def test_update_task(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_tasks()
+
+def test_update_task(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_tasks()
     tasks_page = TasksPage(driver, base_url)
     tasks_page.start_task_edit_by_name('Task 11')
     tasks_page.change_assignee('emily@example.com')
@@ -281,13 +260,9 @@ def test_update_task(driver, base_url):
         'Published': [{'Title': 'Changed', 'Content': 'Changed content', 'Index': '3220', 'Edit_button_present': True, 'Show_button_present': True}]
         }
 
-def test_delete_task(driver, base_url):
-    start_page = LoginPage(driver, base_url)
-    start_page.open(base_url)
-    start_page.login('admin', 'admin')
-    main_page = MainPage(driver, base_url)
-    assert main_page.title() == 'Welcome to the administration'
-    main_page.go_to_tasks()
+
+def test_delete_task(driver, base_url, logged_in_main_page):
+    logged_in_main_page.go_to_tasks()
     tasks_page = TasksPage(driver, base_url)
     tasks_page.start_task_edit_by_name('Task 14')
     tasks_page.delete_entity()
