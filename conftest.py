@@ -5,9 +5,16 @@ from selenium.webdriver.chrome.options import Options
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
 
+
 @pytest.fixture
 def base_url():
-    return os.environ.get('APP_BASE_URL', 'http://localhost:5173')
+    implementation = os.getenv("IMPLEMENTATION") 
+    if implementation: 
+        base_url = f"http://{implementation}.test" 
+    else: 
+        base_url = os.getenv("APP_BASE_URL", "http://localhost:5173")
+    return base_url
+
 
 @pytest.fixture
 def driver():
