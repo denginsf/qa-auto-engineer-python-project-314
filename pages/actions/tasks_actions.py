@@ -59,7 +59,7 @@ class TasksActions(BasePage):
     def are_all_columns_present(self):
         expected_columns = ['Draft', 'To Review', 'To Be Fixed', 'To Publish', 'Published']
         for column in expected_columns:
-            if not self.is_visible(TasksLocators.get_status_column_by_name(column)):
+            if not self.is_clickable(TasksLocators.get_status_column_by_name(column)):
                 return False
         return True
 
