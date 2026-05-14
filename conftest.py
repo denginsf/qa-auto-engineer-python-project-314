@@ -24,6 +24,7 @@ def driver():
     opts.add_argument("--headless=new")
     opts.add_argument("--disable-gpu")
     opts.add_argument("--window-size=1920,1080")
+    opts.add_argument("--start-maximized")
     driver = webdriver.Chrome(options=opts)
     yield driver
     driver.quit()
