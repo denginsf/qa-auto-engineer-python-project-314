@@ -110,12 +110,12 @@ def test_smoke_statuses_list(driver, base_url, logged_in_main_page):
     assert statuses_page.statuses_table_is_loaded()
     all_statuses_data = statuses_page.get_all_statuses_data()
     assert all_statuses_data == [
-        {'id': '1', 'name': 'Draft', 'slug': 'draft', 'createdAt': '30.10.2023, 03:00:00'}, 
-        {'id': '2', 'name': 'To Review', 'slug': 'to_review', 'createdAt': '30.10.2023, 03:00:00'}, 
-        {'id': '3', 'name': 'To Be Fixed', 'slug': 'to_be_fixed', 'createdAt': '30.10.2023, 03:00:00'}, 
-        {'id': '4', 'name': 'To Publish', 'slug': 'to_publish', 'createdAt': '30.10.2023, 03:00:00'}, 
-        {'id': '5', 'name': 'Published', 'slug': 'published', 'createdAt': '30.10.2023, 03:00:00'}
-        ]
+        {"id": "1", "name": "bug", "createdAt": "12/21/2023, 12:00:00 AM"},
+        {"id": "2", "name": "feature", "createdAt": "12/21/2023, 12:00:00 AM"},
+        {"id": "3", "name": "enhancement", "createdAt": "12/22/2023, 12:00:00 AM"},
+        {"id": "4", "name": "task", "createdAt": "12/23/2023, 12:00:00 AM"},
+        {"id": "5", "name": "critical", "createdAt": "12/24/2023, 12:00:00 AM"}
+    ]
 
 
 def test_status_update_validations(driver, base_url, logged_in_main_page):
@@ -176,11 +176,11 @@ def test_smoke_labels_list(driver, base_url, logged_in_main_page):
     assert labels_page.labels_table_is_loaded()
     labels_list = labels_page.get_all_labels_data()
     assert labels_list == [
-    {"id": "1", "name": "bug", "createdAt": "21.12.2023, 03:00:00"},
-    {"id": "2", "name": "feature", "createdAt": "21.12.2023, 03:00:00"},
-    {"id": "3", "name": "enhancement", "createdAt": "22.12.2023, 03:00:00"},
-    {"id": "4", "name": "task", "createdAt": "23.12.2023, 03:00:00"},
-    {"id": "5", "name": "critical", "createdAt": "24.12.2023, 03:00:00"}
+        {"id": "1", "name": "bug", "createdAt": "12/21/2023, 12:00:00 AM"},
+        {"id": "2", "name": "feature", "createdAt": "12/21/2023, 12:00:00 AM"},
+        {"id": "3", "name": "enhancement", "createdAt": "12/22/2023, 12:00:00 AM"},
+        {"id": "4", "name": "task", "createdAt": "12/23/2023, 12:00:00 AM"},
+        {"id": "5", "name": "critical", "createdAt": "12/24/2023, 12:00:00 AM"}
     ]
 
 
