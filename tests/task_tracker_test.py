@@ -110,11 +110,11 @@ def test_smoke_statuses_list(driver, base_url, logged_in_main_page):
     assert statuses_page.statuses_table_is_loaded()
     all_statuses_data = statuses_page.get_all_statuses_data()
     assert all_statuses_data == [
-        {"id": "1", "name": "bug", "createdAt": "12/21/2023, 12:00:00 AM"},
-        {"id": "2", "name": "feature", "createdAt": "12/21/2023, 12:00:00 AM"},
-        {"id": "3", "name": "enhancement", "createdAt": "12/22/2023, 12:00:00 AM"},
-        {"id": "4", "name": "task", "createdAt": "12/23/2023, 12:00:00 AM"},
-        {"id": "5", "name": "critical", "createdAt": "12/24/2023, 12:00:00 AM"}
+        {'id': '1', 'name': 'Draft', 'slug': 'draft', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
+        {'id': '2', 'name': 'To Review', 'slug': 'to_review', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
+        {'id': '3', 'name': 'To Be Fixed', 'slug': 'to_be_fixed', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
+        {'id': '4', 'name': 'To Publish', 'slug': 'to_publish', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
+        {'id': '5', 'name': 'Published', 'slug': 'published', 'createdAt': '10/30/2023, 12:00:00 AM'}
     ]
 
 
