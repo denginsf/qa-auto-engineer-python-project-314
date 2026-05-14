@@ -70,21 +70,21 @@ class TasksPage(BasePage):
     
 
     def filter_by_assignee(self, assignee):
-        count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
+        count_before = len(self.find_elements(TasksLocators.TASK_CARD))
         self.actions.select_assignee(assignee)
-        self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
+        self.wait_for_count_stable(TasksLocators.TASK_CARD, count_before)
 
 
     def filter_by_status(self, status):
-        count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
+        count_before = len(self.find_elements(TasksLocators.TASK_CARD))
         self.actions.select_status(status)
-        self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
+        self.wait_for_count_stable(TasksLocators.TASK_CARD, count_before)
 
 
     def filter_by_label(self, label):
-        count_cards_before = len(self.find_elements(TasksLocators.TASK_CARD))
+        count_before = len(self.find_elements(TasksLocators.TASK_CARD))
         self.actions.select_label(label)
-        self.wait.until(lambda d: len(d.find_elements(*TasksLocators.TASK_CARD)) != count_cards_before)
+        self.wait_for_count_stable(TasksLocators.TASK_CARD, count_before)
 
 
     def start_task_edit_by_name(self, task_name):

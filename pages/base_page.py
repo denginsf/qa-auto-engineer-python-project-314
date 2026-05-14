@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-
+import time
 
 class BasePage:
     def __init__(self, driver, base_url):
@@ -143,5 +143,10 @@ class BasePage:
         except TimeoutException:
             return False
 
-    def click_with_scroll(self, element):
-        ActionChains(self.driver).move_to_element(element).click().perform()
+
+    def wait_for_count_stable(self, locator, previous_count):
+        self.wait.until(lambda d: len(d.find_elements(*locator)) != previous_count)
+        import time
+        time.sleep(0.3)
+        count = len(self.driver.find_elements(*locator))
+        self.wait.until(lambda d: len(d.find_elements(*locator)) == count)
