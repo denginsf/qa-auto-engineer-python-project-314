@@ -27,9 +27,9 @@ class LabelsPage(BasePage):
     def labels_table_is_loaded(self):
         columns_visible = all([
             self.is_presence(LabelsLocators.LABEL_HEADER_CHECK_BOX),
-            self.is_visible(LabelsLocators.LABEL_ID_COLUMN),
-            self.is_visible(LabelsLocators.LABEL_NAME_COLUMN),
-            self.is_visible(LabelsLocators.LABEL_CREATED_AT_COLUMN)
+            self.is_clickable(LabelsLocators.LABEL_ID_COLUMN),
+            self.is_clickable(LabelsLocators.LABEL_NAME_COLUMN),
+            self.is_clickable(LabelsLocators.LABEL_CREATED_AT_COLUMN)
         ]
         )
         return columns_visible

@@ -35,10 +35,10 @@ class StatusesPage(BasePage):
     def statuses_table_is_loaded(self):
         columns_visible = all([
             self.is_presence(StatusesLocators.STATUS_HEADER_CHECK_BOX),
-            self.is_visible(StatusesLocators.STATUS_ID_COLUMN),
-            self.is_visible(StatusesLocators.NAME_COLUMN),
-            self.is_visible(StatusesLocators.SLUG_COLUMN),
-            self.is_visible(StatusesLocators.CREATED_AT_COLUMN)
+            self.is_clickable(StatusesLocators.STATUS_ID_COLUMN),
+            self.is_clickable(StatusesLocators.NAME_COLUMN),
+            self.is_clickable(StatusesLocators.SLUG_COLUMN),
+            self.is_clickable(StatusesLocators.CREATED_AT_COLUMN)
         ]
         )
         return columns_visible
