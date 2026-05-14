@@ -37,15 +37,15 @@ def test_smoke_users_list(driver, base_url, logged_in_main_page):
     assert users_page.users_table_is_loaded()
     all_users_data = users_page.get_all_users_data()
     assert all_users_data == [
-        {'id': '1', 'first_name': 'John', 'last_name': 'Doe', 'createdAt': '30.10.2023, 03:00:00'}, 
-        {'id': '2', 'first_name': 'Jack', 'last_name': 'Jons', 'createdAt': '30.10.2023, 03:00:00'}, 
-        {'id': '3', 'first_name': 'Jane', 'last_name': 'Smith', 'createdAt': '05.11.2023, 03:00:00'}, 
-        {'id': '4', 'first_name': 'Alice', 'last_name': 'Johnson', 'createdAt': '06.11.2023, 03:00:00'}, 
-        {'id': '5', 'first_name': 'Peter', 'last_name': 'Brown', 'createdAt': '07.11.2023, 03:00:00'}, 
-        {'id': '6', 'first_name': 'Sarah', 'last_name': 'Wilson', 'createdAt': '08.11.2023, 03:00:00'}, 
-        {'id': '7', 'first_name': 'Michael', 'last_name': 'Davis', 'createdAt': '09.11.2023, 03:00:00'}, 
-        {'id': '8', 'first_name': 'Emily', 'last_name': 'Martinez', 'createdAt': '10.11.2023, 03:00:00'}
-        ]
+        {'id': '1', 'first_name': 'John', 'last_name': 'Doe', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
+        {'id': '2', 'first_name': 'Jack', 'last_name': 'Jons', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
+        {'id': '3', 'first_name': 'Jane', 'last_name': 'Smith', 'createdAt': '11/5/2023, 12:00:00 AM'}, 
+        {'id': '4', 'first_name': 'Alice', 'last_name': 'Johnson', 'createdAt': '11/6/2023, 12:00:00 AM'}, 
+        {'id': '5', 'first_name': 'Peter', 'last_name': 'Brown', 'createdAt': '11/7/2023, 12:00:00 AM'}, 
+        {'id': '6', 'first_name': 'Sarah', 'last_name': 'Wilson', 'createdAt': '11/8/2023, 12:00:00 AM'}, 
+        {'id': '7', 'first_name': 'Michael', 'last_name': 'Davis', 'createdAt': '11/9/2023, 12:00:00 AM'}, 
+        {'id': '8', 'first_name': 'Emily', 'last_name': 'Martinez', 'createdAt': '11/10/2023, 12:00:00 AM'}
+    ]
     
 
 def test_user_update_validations(driver, base_url, logged_in_main_page):
