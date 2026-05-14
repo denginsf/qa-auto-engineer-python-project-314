@@ -44,13 +44,13 @@ class UsersPage(BasePage):
     def users_table_is_loaded(self):
         columns_visible = all([
             self.is_presence(UsersLocators.HEADER_CHECK_BOX),
-            self.is_visible(UsersLocators.ID_COLUMN),
-            self.is_visible(UsersLocators.EMAIL_COLUMN),
-            self.is_visible(UsersLocators.FIRST_NAME_COLUMN),
-            self.is_visible(UsersLocators.LAST_NAME_COLUMN),
-            self.is_visible(UsersLocators.CREATED_AT_COLUMN)
-        ]
-        )
+            self.is_clickable(UsersLocators.CREATE_USER_BUTTON),
+            self.is_clickable(UsersLocators.ID_COLUMN),
+            self.is_clickable(UsersLocators.EMAIL_COLUMN),
+            self.is_clickable(UsersLocators.FIRST_NAME_COLUMN),
+            self.is_clickable(UsersLocators.LAST_NAME_COLUMN),
+            self.is_clickable(UsersLocators.CREATED_AT_COLUMN)
+        ])
         return columns_visible
 
 
