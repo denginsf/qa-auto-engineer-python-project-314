@@ -70,8 +70,8 @@ class TasksActions(BasePage):
                     "Title": self.find_in_element(task, TasksLocators.CARD_TITLE).text,
                     "Content": self.find_in_element(task, TasksLocators.CARD_CONTENT).text,
                     # "Index": self.find_in_element(task, TasksLocators.CARD_INDEX).text.replace("Index: ", ""),
-                    "Edit_button_present": self.is_visible_in_element(task, TasksLocators.EDIT_BUTTON),
-                    "Show_button_present": self.is_visible_in_element(task, TasksLocators.SHOW_BUTTON)
+                    "Edit_button_present": self.is_clickable_in_element(task, TasksLocators.EDIT_BUTTON),
+                    "Show_button_present": self.is_clickable_in_element(task, TasksLocators.SHOW_BUTTON)
                 }
 
 
@@ -87,8 +87,8 @@ class TasksActions(BasePage):
                     "Title": self.find_in_element(card, TasksLocators.CARD_TITLE).text,
                     "Content": self.find_in_element(card, TasksLocators.CARD_CONTENT).text,
                     "Index": self.find_in_element(card, TasksLocators.CARD_INDEX).text.replace("Index: ", ""),
-                    "Edit_button_present": self.is_visible_in_element(card, TasksLocators.EDIT_BUTTON),
-                    "Show_button_present": self.is_visible_in_element(card, TasksLocators.SHOW_BUTTON)
+                    "Edit_button_present": self.is_clickable_in_element(card, TasksLocators.EDIT_BUTTON),
+                    "Show_button_present": self.is_clickable_in_element(card, TasksLocators.SHOW_BUTTON)
                 }
                 tasks_list.append(card_data)
             result[status_name] = tasks_list

@@ -123,10 +123,10 @@ class BasePage:
         return element.find_element(*locator)
     
 
-    def is_visible_in_element(self, parent, locator):
+    def is_clickable_in_element(self, parent, locator):
         try:
-            parent.find_element(*locator)
-            return True
+            element = parent.find_element(*locator)
+            return element.is_enabled() and element.is_displayed()
         except NoSuchElementException:
             return False
         
