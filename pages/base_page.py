@@ -19,6 +19,11 @@ class BasePage:
 
     def click(self, locator):
         action = self.wait.until(EC.element_to_be_clickable(locator))
+        action.click()
+
+
+    def js_click(self, locator):
+        action = self.wait.until(EC.element_to_be_clickable(locator))
         self.driver.execute_script("arguments[0].click();", action)
 
 

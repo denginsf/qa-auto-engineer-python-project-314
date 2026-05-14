@@ -34,19 +34,19 @@ class TasksActions(BasePage):
 
     def select_assignee(self, assignee):
         self.get_combobox_by_label('Assignee').click()
-        self.click(TasksLocators.option_by_text(assignee))
+        self.js_click(TasksLocators.option_by_text(assignee))
         self.esc()
 
 
     def select_status(self, status):
         self.get_combobox_by_label('Status').click()
-        self.click(TasksLocators.option_by_text(status))
+        self.js_click(TasksLocators.option_by_text(status))
         self.esc()
 
 
     def select_label(self, label_value):
         self.get_combobox_by_label('Label').click()
-        self.click(TasksLocators.option_by_text(label_value))
+        self.js_click(TasksLocators.option_by_text(label_value))
         self.esc()
 
 
