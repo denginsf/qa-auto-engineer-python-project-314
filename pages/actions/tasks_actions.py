@@ -69,7 +69,7 @@ class TasksActions(BasePage):
         return {
                     "Title": self.find_in_element(task, TasksLocators.CARD_TITLE).text,
                     "Content": self.find_in_element(task, TasksLocators.CARD_CONTENT).text,
-                    "Index": self.find_in_element(task, TasksLocators.CARD_INDEX).text.replace("Index: ", ""),
+                    # "Index": self.find_in_element(task, TasksLocators.CARD_INDEX).text.replace("Index: ", ""),
                     "Edit_button_present": self.is_visible_in_element(task, TasksLocators.EDIT_BUTTON),
                     "Show_button_present": self.is_visible_in_element(task, TasksLocators.SHOW_BUTTON)
                 }

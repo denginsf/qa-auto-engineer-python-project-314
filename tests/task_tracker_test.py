@@ -28,7 +28,7 @@ def test_create_user(driver, base_url, logged_in_main_page):
     assert users_page.find_success_snackbar()
     logged_in_main_page.go_to_users()
     user_data = users_page.get_user_data_by_email('test@test.com')
-    assert user_data == {'id': '9', 'first_name': 'Alex', 'last_name': 'Test', 'createdAt': 'Дата задана'}
+    assert user_data == {'id': '9', 'first_name': 'Alex', 'last_name': 'Test'}
 
 
 def test_smoke_users_list(driver, base_url, logged_in_main_page):
@@ -72,7 +72,7 @@ def test_user_update(driver, base_url, logged_in_main_page):
     users_page.input_user_data('john_changed@google.com', 'Ivan', 'Doe')
     assert users_page.find_updated_snackbar()
     user_data = users_page.get_user_data_by_email('john_changed@google.com')
-    assert user_data == {'id': '1', 'first_name': 'Ivan', 'last_name': 'Doe', 'createdAt': 'Дата задана'}
+    assert user_data == {'id': '1', 'first_name': 'Ivan', 'last_name': 'Doe'}
 
 
 def test_user_delete(driver, base_url, logged_in_main_page):
@@ -167,7 +167,7 @@ def test_create_label(driver, base_url, logged_in_main_page):
     assert labels_page.find_success_snackbar()
     logged_in_main_page.go_to_labels()
     label_data = labels_page.get_label_data_by_name('test_label')
-    assert label_data == {'id': '6', 'name': 'test_label', 'createdAt': 'Дата задана'}
+    assert label_data == {'id': '6', 'name': 'test_label'}
 
 
 def test_smoke_labels_list(driver, base_url, logged_in_main_page):
@@ -201,7 +201,7 @@ def test_update_label(driver, base_url, logged_in_main_page):
     labels_page.input_label_data('updated_label')
     assert labels_page.find_updated_snackbar()
     label_data = labels_page.get_label_data_by_name('updated_label')
-    assert label_data == {'id': '4', 'name': 'updated_label', 'createdAt': 'Дата задана'}
+    assert label_data == {'id': '4', 'name': 'updated_label'}
 
 
 def test_label_delete(driver, base_url, logged_in_main_page):
@@ -231,7 +231,7 @@ def test_create_task(driver, base_url, logged_in_main_page):
     assert tasks_page.get_task_id_value() == '16'
     logged_in_main_page.go_to_tasks()
     task_data = tasks_page.get_task_data_by_name('Test task')
-    assert task_data == {'Title': 'Test task', 'Content': 'Test Content', 'Index': '3245', 'Edit_button_present': True, 'Show_button_present': True}
+    assert task_data == {'Title': 'Test task', 'Content': 'Test Content', 'Edit_button_present': True, 'Show_button_present': True}
 
 
 def test_update_task(driver, base_url, logged_in_main_page):

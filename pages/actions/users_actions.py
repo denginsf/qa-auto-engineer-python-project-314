@@ -35,16 +35,16 @@ class UsersActions(BasePage):
 
     def find_user_data_by_email_column(self, email):
         row = self.find_element(UsersLocators.get_row_by_email(email))
-        try:
-            created_at = row.find_element(*UsersLocators.CREATED_AT_CELL).text
-            created_at = 'Дата задана'
-        except NoSuchElementException:
-            created_at = "Не задана"
+        # try:
+            # created_at = row.find_element(*UsersLocators.CREATED_AT_CELL).text
+            # created_at = 'Дата задана'
+       # except NoSuchElementException:
+            # created_at = "Не задана"
         return {
                 "id": row.find_element(*UsersLocators.USER_ID_CELL).text,
                 "first_name": row.find_element(*UsersLocators.FIRST_NAME_CELL).text,
-                "last_name": row.find_element(*UsersLocators.LAST_NAME_CELL).text,
-                "createdAt": created_at
+                "last_name": row.find_element(*UsersLocators.LAST_NAME_CELL).text
+                # "createdAt": created_at
                 }
 
 

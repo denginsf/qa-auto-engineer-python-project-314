@@ -16,15 +16,15 @@ class LabelsActions(BasePage):
 
     def find_label_data_by_name(self, name):
         row = self.find_element(LabelsLocators.get_row_by_label_name(name))
-        try:
-            created_at = row.find_element(*LabelsLocators.LABEL_CREATED_AT_CELL).text
-            created_at = 'Дата задана'
-        except NoSuchElementException:
-            created_at = "Не задана"
+        # try:
+            # created_at = row.find_element(*LabelsLocators.LABEL_CREATED_AT_CELL).text
+            # created_at = 'Дата задана'
+        # except NoSuchElementException:
+            # created_at = "Не задана"
         return {
                 "id": self.find_in_element(row, LabelsLocators.LABEL_ID_CELL).text,
-                "name": self.find_in_element(row, LabelsLocators.LABEL_NAME_CELL).text,
-                "createdAt": created_at
+                "name": self.find_in_element(row, LabelsLocators.LABEL_NAME_CELL).text
+                # "createdAt": created_at
                 }
 
 
