@@ -134,3 +134,11 @@ class BasePage:
     def is_save_button_disabled(self):
         button = self.find_element(BaseLocators.SAVE_BUTTON)
         return button.get_attribute('disabled') is not None
+    
+    
+    def is_clickable(self, locator):
+        try:
+            self.wait.until(EC.element_to_be_clickable(locator))
+            return True
+        except TimeoutException:
+            return False
