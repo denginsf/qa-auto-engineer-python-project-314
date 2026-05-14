@@ -142,3 +142,6 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    def click_with_scroll(self, element):
+        ActionChains(self.driver).move_to_element(element).click().perform()

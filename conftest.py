@@ -29,6 +29,7 @@ def driver():
     yield driver
     driver.quit()
 
+
 @pytest.fixture
 def logged_in_main_page(driver, base_url):
     login_page = LoginPage(driver, base_url)

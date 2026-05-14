@@ -1,6 +1,7 @@
 from pages.locators.tasks_locators import TasksLocators
 from pages.base_page import BasePage
 
+
 class TasksActions(BasePage):
     def __init__(self, driver, base_url):
         super().__init__(driver, base_url)
@@ -32,27 +33,20 @@ class TasksActions(BasePage):
 
 
     def select_assignee(self, assignee):
-        combobox = self.get_combobox_by_label('Assignee')
-        combobox.click()
-        listbox_id = combobox.get_attribute("aria-controls")
-        listbox = self.find_element(TasksLocators.listbox_by_id(listbox_id))
-        listbox.find_element(*TasksLocators.option_by_text(assignee)).click()
+        self.get_combobox_by_label('Assignee').click()
+        self.click(TasksLocators.option_by_text(assignee))
+        self.esc()
 
 
     def select_status(self, status):
-        combobox = self.get_combobox_by_label('Status')
-        combobox.click()
-        listbox_id = combobox.get_attribute("aria-controls")
-        listbox = self.find_element(TasksLocators.listbox_by_id(listbox_id))
-        listbox.find_element(*TasksLocators.option_by_text(status)).click()
+        self.get_combobox_by_label('Status').click()
+        self.click(TasksLocators.option_by_text(status))
+        self.esc()
 
 
     def select_label(self, label_value):
-        combobox = self.get_combobox_by_label('Label')
-        combobox.click()
-        listbox_id = combobox.get_attribute("aria-controls")
-        listbox = self.find_element(TasksLocators.listbox_by_id(listbox_id))
-        listbox.find_element(*TasksLocators.option_by_text(label_value)).click()
+        self.get_combobox_by_label('Label').click()
+        self.click(TasksLocators.option_by_text(label_value))
         self.esc()
 
 

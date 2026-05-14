@@ -27,7 +27,7 @@ class TasksLocators:
     
     @staticmethod    
     def option_by_text(option_text):
-        return By.XPATH, f".//li[contains(text(), '{option_text}')]"
+        return By.XPATH, f"//li[@role='option'][normalize-space()='{option_text}']"
     
     @staticmethod
     def get_task_in_status_column(status, task_title):
