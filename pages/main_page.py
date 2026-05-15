@@ -29,3 +29,10 @@ class MainPage(BasePage):
 
     def go_to_tasks(self):
         self.actions.click_on_tasks()
+
+    def all_nav_items_visible_and_clickable(self):
+        return self.actions.all_nav_items_visible_and_clickable()
+
+    def dashboard_card_is_correct(self):
+        return (self.actions.dashboard_card_is_visible() and
+                self.actions.dashboard_card_text_is_correct())

@@ -12,6 +12,8 @@ def test_login(driver, base_url):
     start_page.login('admin', 'admin')
     main_page = MainPage(driver, base_url)
     assert main_page.title() == 'Welcome to the administration'
+    assert main_page.all_nav_items_visible_and_clickable()
+    assert main_page.dashboard_card_is_correct()
 
 
 def test_logout(driver, base_url, logged_in_main_page):

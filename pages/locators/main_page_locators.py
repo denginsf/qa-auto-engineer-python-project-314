@@ -8,3 +8,10 @@ class MainPageLocators:
     STATUSES_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Task statuses")]')
     LABELS_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Labels")]')
     TASKS_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Tasks")]')
+    DASHBOARD_BUTTON = (By.XPATH, '//a[@role="menuitem" and contains(text(), "Dashboard")]')
+    DASHBOARD_CARD = (By.CSS_SELECTOR, ".MuiCardContent-root")
+    DASHBOARD_CARD_TEXT = "Lorem ipsum sic dolor amet..."
+
+    @staticmethod
+    def nav_item_by_name(name):
+        return By.XPATH, f"//a[@role='menuitem'][contains(., '{name}')]"
