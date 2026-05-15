@@ -20,9 +20,7 @@ def test_logout(driver, base_url, logged_in_main_page):
     assert login_page.find_lock_icon()
 
 
-def test_create_user(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
+def test_create_user(users_page, logged_in_main_page):
     users_page.open_entity_creation_form()
     users_page.input_user_data('test@test.com', 'Alex', 'Test')
     assert users_page.find_success_snackbar()
@@ -31,9 +29,7 @@ def test_create_user(driver, base_url, logged_in_main_page):
     assert user_data == {'id': '9', 'first_name': 'Alex', 'last_name': 'Test'}
 
 
-def test_smoke_users_list(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
+def test_smoke_users_list(users_page, logged_in_main_page):
     assert users_page.users_table_is_loaded()
     all_users_data = users_page.get_all_users_data()
     assert all_users_data == [
@@ -48,9 +44,7 @@ def test_smoke_users_list(driver, base_url, logged_in_main_page):
     ]
     
 
-def test_user_update_validations(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
+def test_user_update_validations(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
     users_page.delete_user_email()
     users_page.delete_user_first_name()
@@ -62,9 +56,7 @@ def test_user_update_validations(driver, base_url, logged_in_main_page):
     assert users_page.email_validation_error_is_visible()
 
 
-def test_user_update(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
+def test_user_update(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
     users_page.delete_user_email()
     users_page.delete_user_first_name()
@@ -75,27 +67,21 @@ def test_user_update(driver, base_url, logged_in_main_page):
     assert user_data == {'id': '1', 'first_name': 'Ivan', 'last_name': 'Doe'}
 
 
-def test_user_delete(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
+def test_user_delete(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
     users_page.delete_entity()
     assert users_page.find_deleted_snackbar()
     assert not users_page.is_user_exist('john@google.com')
 
 
-def test_all_users_delete(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_users()
-    users_page = UsersPage(driver, base_url)
+def test_all_users_delete(users_page, logged_in_main_page):
     users_page.select_all_entities()
     users_page.delete_entity()
     assert users_page.find_all_entities_deleted_snackbar()
     assert users_page.users_table_is_empty()
 
 
-def test_create_status(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_statuses()
-    statuses_page = StatusesPage(driver, base_url)
+def test_create_status(statuses_page, logged_in_main_page):
     statuses_page.open_entity_creation_form()
     statuses_page.input_status_data('test_status', 'test')
     assert statuses_page.find_success_snackbar()
@@ -104,9 +90,7 @@ def test_create_status(driver, base_url, logged_in_main_page):
     assert status_data == {'id': '6', 'slug': 'test', 'createdAt': 'Дата задана'}
 
 
-def test_smoke_statuses_list(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_statuses()
-    statuses_page = StatusesPage(driver, base_url)
+def test_smoke_statuses_list(statuses_page, logged_in_main_page):
     assert statuses_page.statuses_table_is_loaded()
     all_statuses_data = statuses_page.get_all_statuses_data()
     assert all_statuses_data == [
@@ -118,9 +102,7 @@ def test_smoke_statuses_list(driver, base_url, logged_in_main_page):
     ]
 
 
-def test_status_update_validations(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_statuses()
-    statuses_page = StatusesPage(driver, base_url)
+def test_status_update_validations(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
     statuses_page.delete_status_name()
     statuses_page.delete_status_slug()
@@ -129,9 +111,7 @@ def test_status_update_validations(driver, base_url, logged_in_main_page):
     assert statuses_page.get_required_errors_count() == 2
 
 
-def test_status_update(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_statuses()
-    statuses_page = StatusesPage(driver, base_url)
+def test_status_update(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
     statuses_page.delete_status_name()
     statuses_page.delete_status_slug()
@@ -141,27 +121,21 @@ def test_status_update(driver, base_url, logged_in_main_page):
     assert status_data == {'id': '1', 'slug': 'updated', 'createdAt': 'Дата задана'}
 
 
-def test_status_delete(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_statuses()
-    statuses_page = StatusesPage(driver, base_url)
+def test_status_delete(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
     statuses_page.delete_entity()
     assert statuses_page.find_deleted_snackbar()
     assert not statuses_page.is_status_exist('Draft')
 
 
-def test_all_statuses_delete(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_statuses()
-    statuses_page = StatusesPage(driver, base_url)
+def test_all_statuses_delete(statuses_page, logged_in_main_page):
     statuses_page.select_all_entities()
     statuses_page.delete_entity()
     assert statuses_page.find_all_entities_deleted_snackbar()
     assert statuses_page.statuses_table_is_empty()
 
 
-def test_create_label(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_labels()
-    labels_page = LabelsPage(driver, base_url)
+def test_create_label(labels_page, logged_in_main_page):
     labels_page.open_entity_creation_form()
     labels_page.input_label_data('test_label')
     assert labels_page.find_success_snackbar()
@@ -170,9 +144,7 @@ def test_create_label(driver, base_url, logged_in_main_page):
     assert label_data == {'id': '6', 'name': 'test_label'}
 
 
-def test_smoke_labels_list(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_labels()
-    labels_page = LabelsPage(driver, base_url)
+def test_smoke_labels_list(labels_page, logged_in_main_page):
     assert labels_page.labels_table_is_loaded()
     labels_list = labels_page.get_all_labels_data()
     assert labels_list == [
@@ -184,9 +156,7 @@ def test_smoke_labels_list(driver, base_url, logged_in_main_page):
     ]
 
 
-def test_label_update_validation(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_labels()
-    labels_page = LabelsPage(driver, base_url)
+def test_label_update_validation(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('task')
     labels_page.delete_label_name()
     labels_page.save_entity()
@@ -194,9 +164,7 @@ def test_label_update_validation(driver, base_url, logged_in_main_page):
     assert labels_page.get_required_errors_count() == 1
 
 
-def test_update_label(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_labels()
-    labels_page = LabelsPage(driver, base_url)
+def test_update_label(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('task')
     labels_page.input_label_data('updated_label')
     assert labels_page.find_updated_snackbar()
@@ -204,27 +172,21 @@ def test_update_label(driver, base_url, logged_in_main_page):
     assert label_data == {'id': '4', 'name': 'updated_label'}
 
 
-def test_label_delete(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_labels()
-    labels_page = LabelsPage(driver, base_url)
+def test_label_delete(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('feature')
     labels_page.delete_entity()
     assert labels_page.find_deleted_snackbar()
     assert not labels_page.is_label_exist('feature')
 
 
-def test_all_labels_delete(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_labels()
-    labels_page = LabelsPage(driver, base_url)
+def test_all_labels_delete(labels_page, logged_in_main_page):
     labels_page.select_all_entities()
     labels_page.delete_entity()
     assert labels_page.find_all_entities_deleted_snackbar()
     assert labels_page.labels_table_is_empty()
 
 
-def test_create_task(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_tasks()
-    tasks_page = TasksPage(driver, base_url)
+def test_create_task(tasks_page, logged_in_main_page):
     assert tasks_page.open_entity_creation_form()
     tasks_page.create_task('emily@example.com', 'Test task', 'Test Content', 'Draft', 'critical')
     assert tasks_page.find_success_snackbar()
@@ -234,9 +196,7 @@ def test_create_task(driver, base_url, logged_in_main_page):
     assert task_data == {'Title': 'Test task', 'Content': 'Test Content', 'Edit_button_present': True, 'Show_button_present': True}
 
 
-def test_update_task(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_tasks()
-    tasks_page = TasksPage(driver, base_url)
+def test_update_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 11')
     tasks_page.change_assignee('emily@example.com')
     tasks_page.change_title('Changed')
@@ -256,9 +216,7 @@ def test_update_task(driver, base_url, logged_in_main_page):
         }
 
 
-def test_task_creation_form_validation(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_tasks()
-    tasks_page = TasksPage(driver, base_url)
+def test_task_creation_form_validation(tasks_page, logged_in_main_page):
     assert tasks_page.open_entity_creation_form()
     assert tasks_page.is_save_button_disabled()
     tasks_page.change_content('Changed content')
@@ -268,9 +226,7 @@ def test_task_creation_form_validation(driver, base_url, logged_in_main_page):
     assert tasks_page.get_required_errors_count() == 3
 
 
-def test_smoke_tasks_list(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_tasks()
-    tasks_page = TasksPage(driver, base_url)
+def test_smoke_tasks_list(tasks_page, logged_in_main_page):
     assert tasks_page.task_page_is_loaded()
     tasks_list = tasks_page.get_all_tasks_data()
     assert tasks_list == {
@@ -291,9 +247,7 @@ def test_smoke_tasks_list(driver, base_url, logged_in_main_page):
                       {'Title': 'Task 10', 'Content': 'Description of task 10', 'Index': '3329', 'Edit_button_present': True, 'Show_button_present': True}]}
 
 
-def test_tasks_filtration_list(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_tasks()
-    tasks_page = TasksPage(driver, base_url)
+def test_tasks_filtration_list(tasks_page, logged_in_main_page):
     assert tasks_page.task_page_is_loaded()
     tasks_page.filter_by_assignee('jack@yahoo.com')
     filtered_tasks_list = tasks_page.get_all_tasks_data()
@@ -326,9 +280,7 @@ def test_tasks_filtration_list(driver, base_url, logged_in_main_page):
         }
 
 
-def test_delete_task(driver, base_url, logged_in_main_page):
-    logged_in_main_page.go_to_tasks()
-    tasks_page = TasksPage(driver, base_url)
+def test_delete_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 14')
     tasks_page.delete_entity()
     assert tasks_page.find_deleted_snackbar()

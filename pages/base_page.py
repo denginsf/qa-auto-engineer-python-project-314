@@ -155,3 +155,19 @@ class BasePage:
         time.sleep(0.3)
         count = len(self.driver.find_elements(*locator))
         self.wait.until(lambda d: len(d.find_elements(*locator)) == count)
+
+    
+    def get_page_title(self):
+        return self.text_of_element(BaseLocators.TITLE)
+
+
+    def is_on_page(self, expected_title):
+        try:
+            title = self.get_page_title()
+            return title == expected_title
+        except:
+            return False
+
+
+    def is_on_page_by_url(self, expected_url_part):
+        return expected_url_part in self.driver.current_url

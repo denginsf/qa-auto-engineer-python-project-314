@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 
 class BaseLocators:
     CREATE_BUTTON = (By.CSS_SELECTOR, '[aria-label="Create"]')
+    TITLE = (By.ID, 'react-admin-title')
     SAVE_BUTTON = (By.XPATH, '//button[@type="submit" and contains(text(), "Save")]')
     DELETE_BUTTON = (By.CSS_SELECTOR, '[aria-label="Delete"]')
     SELECT_ALL = (By.CSS_SELECTOR, '.select-all')
