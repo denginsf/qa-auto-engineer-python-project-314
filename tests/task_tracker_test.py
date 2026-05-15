@@ -25,6 +25,7 @@ def test_create_user(users_page, logged_in_main_page):
     assert users_page.get_page_title() == "Create User"
     users_page.input_user_data('test@test.com', 'Alex', 'Test')
     assert users_page.find_success_snackbar()
+    assert users_page.get_page_title() == "User test@test.com"
     logged_in_main_page.go_to_users()
     assert users_page.get_page_title() == "Users"
     user_data = users_page.get_user_data_by_email('test@test.com')
@@ -95,6 +96,7 @@ def test_create_status(statuses_page, logged_in_main_page):
     assert statuses_page.get_page_title() == "Create Task status"
     statuses_page.input_status_data('test_status', 'test')
     assert statuses_page.find_success_snackbar()
+    assert statuses_page.get_page_title() == "Task status test_status"
     logged_in_main_page.go_to_statuses()
     status_data = statuses_page.get_status_data_by_name('test_status')
     assert statuses_page.get_page_title() == "Task statuses"
@@ -158,6 +160,7 @@ def test_create_label(labels_page, logged_in_main_page):
     assert labels_page.get_page_title() == "Create Label"
     labels_page.input_label_data('test_label')
     assert labels_page.find_success_snackbar()
+    assert labels_page.get_page_title() == "Label test_label"
     logged_in_main_page.go_to_labels()
     label_data = labels_page.get_label_data_by_name('test_label')
     assert labels_page.get_page_title() == "Labels"
@@ -218,6 +221,7 @@ def test_create_task(tasks_page, logged_in_main_page):
     assert tasks_page.get_page_title() == "Create Task"
     tasks_page.create_task('emily@example.com', 'Test task', 'Test Content', 'Draft', 'critical')
     assert tasks_page.find_success_snackbar()
+    assert tasks_page.get_page_title() == "Task Test task"
     assert tasks_page.get_task_id_value() == '16'
     logged_in_main_page.go_to_tasks()
     task_data = tasks_page.get_task_data_by_name('Test task')
