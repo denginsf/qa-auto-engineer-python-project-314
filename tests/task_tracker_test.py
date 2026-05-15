@@ -22,6 +22,7 @@ def test_logout(driver, base_url, logged_in_main_page):
 
 def test_create_user(users_page, logged_in_main_page):
     users_page.open_entity_creation_form()
+    assert users_page.get_page_title() == "Create User"
     users_page.input_user_data('test@test.com', 'Alex', 'Test')
     assert users_page.find_success_snackbar()
     logged_in_main_page.go_to_users()
@@ -46,6 +47,7 @@ def test_smoke_users_list(users_page, logged_in_main_page):
 
 def test_user_update_validations(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
+    assert users_page.get_page_title() == "User john@google.com"
     users_page.delete_user_email()
     users_page.delete_user_first_name()
     users_page.delete_user_last_name()
@@ -58,6 +60,7 @@ def test_user_update_validations(users_page, logged_in_main_page):
 
 def test_user_update(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
+    assert users_page.get_page_title() == "User john@google.com"
     users_page.delete_user_email()
     users_page.delete_user_first_name()
     users_page.delete_user_last_name()
@@ -69,6 +72,7 @@ def test_user_update(users_page, logged_in_main_page):
 
 def test_user_delete(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
+    assert users_page.get_page_title() == "User john@google.com"
     users_page.delete_entity()
     assert users_page.find_deleted_snackbar()
     assert not users_page.is_user_exist('john@google.com')
@@ -83,6 +87,7 @@ def test_all_users_delete(users_page, logged_in_main_page):
 
 def test_create_status(statuses_page, logged_in_main_page):
     statuses_page.open_entity_creation_form()
+    assert statuses_page.get_page_title() == "Create Task status"
     statuses_page.input_status_data('test_status', 'test')
     assert statuses_page.find_success_snackbar()
     logged_in_main_page.go_to_statuses()
@@ -104,6 +109,7 @@ def test_smoke_statuses_list(statuses_page, logged_in_main_page):
 
 def test_status_update_validations(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
+    assert statuses_page.get_page_title() == "Task status Draft"
     statuses_page.delete_status_name()
     statuses_page.delete_status_slug()
     statuses_page.save_entity()
@@ -113,6 +119,7 @@ def test_status_update_validations(statuses_page, logged_in_main_page):
 
 def test_status_update(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
+    assert statuses_page.get_page_title() == "Task status Draft"
     statuses_page.delete_status_name()
     statuses_page.delete_status_slug()
     statuses_page.input_status_data('test_updated', 'updated')
@@ -123,6 +130,7 @@ def test_status_update(statuses_page, logged_in_main_page):
 
 def test_status_delete(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
+    assert statuses_page.get_page_title() == "Task status Draft"
     statuses_page.delete_entity()
     assert statuses_page.find_deleted_snackbar()
     assert not statuses_page.is_status_exist('Draft')
@@ -137,6 +145,7 @@ def test_all_statuses_delete(statuses_page, logged_in_main_page):
 
 def test_create_label(labels_page, logged_in_main_page):
     labels_page.open_entity_creation_form()
+    assert labels_page.get_page_title() == "Create Label"
     labels_page.input_label_data('test_label')
     assert labels_page.find_success_snackbar()
     logged_in_main_page.go_to_labels()
@@ -158,6 +167,7 @@ def test_smoke_labels_list(labels_page, logged_in_main_page):
 
 def test_label_update_validation(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('task')
+    assert labels_page.get_page_title() == "Label task"
     labels_page.delete_label_name()
     labels_page.save_entity()
     assert labels_page.find_error_snackbar()
@@ -166,6 +176,7 @@ def test_label_update_validation(labels_page, logged_in_main_page):
 
 def test_update_label(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('task')
+    assert labels_page.get_page_title() == "Label task"
     labels_page.input_label_data('updated_label')
     assert labels_page.find_updated_snackbar()
     label_data = labels_page.get_label_data_by_name('updated_label')
@@ -174,6 +185,7 @@ def test_update_label(labels_page, logged_in_main_page):
 
 def test_label_delete(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('feature')
+    assert labels_page.get_page_title() == "Label feature"
     labels_page.delete_entity()
     assert labels_page.find_deleted_snackbar()
     assert not labels_page.is_label_exist('feature')
@@ -188,6 +200,7 @@ def test_all_labels_delete(labels_page, logged_in_main_page):
 
 def test_create_task(tasks_page, logged_in_main_page):
     assert tasks_page.open_entity_creation_form()
+    assert tasks_page.get_page_title() == "Create Task"
     tasks_page.create_task('emily@example.com', 'Test task', 'Test Content', 'Draft', 'critical')
     assert tasks_page.find_success_snackbar()
     assert tasks_page.get_task_id_value() == '16'
@@ -198,6 +211,7 @@ def test_create_task(tasks_page, logged_in_main_page):
 
 def test_update_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 11')
+    assert tasks_page.get_page_title() == "Task Task 11"
     tasks_page.change_assignee('emily@example.com')
     tasks_page.change_title('Changed')
     tasks_page.change_content('Changed content')
@@ -218,6 +232,7 @@ def test_update_task(tasks_page, logged_in_main_page):
 
 def test_task_creation_form_validation(tasks_page, logged_in_main_page):
     assert tasks_page.open_entity_creation_form()
+    assert tasks_page.get_page_title() == "Create Task"
     assert tasks_page.is_save_button_disabled()
     tasks_page.change_content('Changed content')
     assert not tasks_page.is_save_button_disabled()
@@ -282,6 +297,7 @@ def test_tasks_filtration_list(tasks_page, logged_in_main_page):
 
 def test_delete_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 14')
+    assert tasks_page.get_page_title() == "Task Task 14"
     tasks_page.delete_entity()
     assert tasks_page.find_deleted_snackbar()
     assert not tasks_page.is_task_present_in_status('To Publish', 'Task 14')
