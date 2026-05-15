@@ -229,6 +229,9 @@ def test_create_task(tasks_page, logged_in_main_page):
     task_data = tasks_page.get_task_data_by_name('Test task')
     assert tasks_page.get_page_title() == "Tasks"
     assert task_data == {'Title': 'Test task', 'Content': 'Test Content', 'Edit_button_present': True, 'Show_button_present': True}
+    tasks_page.open_show_task('Test task')
+    assert tasks_page.get_page_title() == "Task Test task"
+
 
 
 def test_update_task(tasks_page, logged_in_main_page):

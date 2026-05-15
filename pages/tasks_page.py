@@ -90,3 +90,7 @@ class TasksPage(BasePage):
     def start_task_edit_by_name(self, task_name):
         task_card = self.find_element(TasksLocators.get_task_card_by_name(task_name))
         self.find_in_element(task_card, TasksLocators.EDIT_BUTTON).click()
+
+
+    def open_show_task(self, task_name):
+        self.actions.click_show_task(task_name)

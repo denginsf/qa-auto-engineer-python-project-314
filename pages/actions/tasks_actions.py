@@ -87,3 +87,8 @@ class TasksActions(BasePage):
                 tasks_list.append(card_data)
             result[status_name] = tasks_list
         return result
+
+
+    def click_show_task(self, task_name):
+        task_card = self.find_element(TasksLocators.get_task_card_by_name(task_name))
+        self.find_in_element(task_card, TasksLocators.SHOW_BUTTON).click()
