@@ -171,3 +171,7 @@ class BasePage:
 
     def is_on_page_by_url(self, expected_url_part):
         return expected_url_part in self.driver.current_url
+    
+
+    def browser_title_is_correct(self):
+        return self.driver.title == 'Task manager'

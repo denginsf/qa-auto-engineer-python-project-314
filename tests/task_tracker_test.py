@@ -14,22 +14,26 @@ def test_login(driver, base_url):
     assert main_page.title() == 'Welcome to the administration'
     assert main_page.all_nav_items_visible_and_clickable()
     assert main_page.dashboard_card_is_correct()
+    assert main_page.browser_title_is_correct()
 
 
 def test_logout(driver, base_url, logged_in_main_page):
     logged_in_main_page.logout()
     login_page = LoginPage(driver, base_url)
     assert login_page.find_lock_icon()
+    assert login_page.browser_title_is_correct()
 
 
 def test_create_user(users_page, logged_in_main_page):
     users_page.open_entity_creation_form()
     assert users_page.get_page_title() == "Create User"
+    assert users_page.browser_title_is_correct()
     users_page.input_user_data('test@test.com', 'Alex', 'Test')
     assert users_page.find_success_snackbar()
     assert users_page.get_page_title() == "User test@test.com"
     logged_in_main_page.go_to_users()
     assert users_page.get_page_title() == "Users"
+    assert users_page.browser_title_is_correct()
     user_data = users_page.get_user_data_by_email('test@test.com')
     assert user_data == {'id': '9', 'first_name': 'Alex', 'last_name': 'Test'}
 
@@ -37,6 +41,7 @@ def test_create_user(users_page, logged_in_main_page):
 def test_smoke_users_list(users_page, logged_in_main_page):
     assert users_page.users_table_is_loaded()
     assert users_page.get_page_title() == "Users"
+    assert users_page.browser_title_is_correct()
     all_users_data = users_page.get_all_users_data()
     assert all_users_data == [
         {'id': '1', 'first_name': 'John', 'last_name': 'Doe', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
@@ -53,6 +58,7 @@ def test_smoke_users_list(users_page, logged_in_main_page):
 def test_user_update_validations(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
     assert users_page.get_page_title() == "User john@google.com"
+    assert users_page.browser_title_is_correct()
     users_page.delete_user_email()
     users_page.delete_user_first_name()
     users_page.delete_user_last_name()
@@ -66,6 +72,7 @@ def test_user_update_validations(users_page, logged_in_main_page):
 def test_user_update(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
     assert users_page.get_page_title() == "User john@google.com"
+    assert users_page.browser_title_is_correct()
     users_page.delete_user_email()
     users_page.delete_user_first_name()
     users_page.delete_user_last_name()
@@ -73,16 +80,19 @@ def test_user_update(users_page, logged_in_main_page):
     assert users_page.find_updated_snackbar()
     user_data = users_page.get_user_data_by_email('john_changed@google.com')
     assert users_page.get_page_title() == "Users"
+    assert users_page.browser_title_is_correct()
     assert user_data == {'id': '1', 'first_name': 'Ivan', 'last_name': 'Doe'}
 
 
 def test_user_delete(users_page, logged_in_main_page):
     users_page.click_on_row('john@google.com')
     assert users_page.get_page_title() == "User john@google.com"
+    assert users_page.browser_title_is_correct()
     users_page.delete_entity()
     assert users_page.find_deleted_snackbar()
     assert not users_page.is_user_exist('john@google.com')
     assert users_page.get_page_title() == "Users"
+    assert users_page.browser_title_is_correct()
 
 
 def test_all_users_delete(users_page, logged_in_main_page):
@@ -91,17 +101,20 @@ def test_all_users_delete(users_page, logged_in_main_page):
     assert users_page.find_all_entities_deleted_snackbar()
     assert users_page.users_table_is_empty()
     assert users_page.get_page_title() == "Users"
+    assert users_page.browser_title_is_correct()
 
 
 def test_create_status(statuses_page, logged_in_main_page):
     statuses_page.open_entity_creation_form()
     assert statuses_page.get_page_title() == "Create Task status"
+    assert statuses_page.browser_title_is_correct()
     statuses_page.input_status_data('test_status', 'test')
     assert statuses_page.find_success_snackbar()
     assert statuses_page.get_page_title() == "Task status test_status"
     logged_in_main_page.go_to_statuses()
     status_data = statuses_page.get_status_data_by_name('test_status')
     assert statuses_page.get_page_title() == "Task statuses"
+    assert statuses_page.browser_title_is_correct()
     assert status_data == {'id': '6', 'slug': 'test', 'createdAt': 'Дата задана'}
 
 
@@ -109,6 +122,7 @@ def test_smoke_statuses_list(statuses_page, logged_in_main_page):
     assert statuses_page.statuses_table_is_loaded()
     all_statuses_data = statuses_page.get_all_statuses_data()
     assert statuses_page.get_page_title() == "Task statuses"
+    assert statuses_page.browser_title_is_correct()
     assert all_statuses_data == [
         {'id': '1', 'name': 'Draft', 'slug': 'draft', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
         {'id': '2', 'name': 'To Review', 'slug': 'to_review', 'createdAt': '10/30/2023, 12:00:00 AM'}, 
@@ -121,6 +135,7 @@ def test_smoke_statuses_list(statuses_page, logged_in_main_page):
 def test_status_update_validations(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
     assert statuses_page.get_page_title() == "Task status Draft"
+    assert statuses_page.browser_title_is_correct()
     statuses_page.delete_status_name()
     statuses_page.delete_status_slug()
     statuses_page.save_entity()
@@ -131,18 +146,21 @@ def test_status_update_validations(statuses_page, logged_in_main_page):
 def test_status_update(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
     assert statuses_page.get_page_title() == "Task status Draft"
+    assert statuses_page.browser_title_is_correct()
     statuses_page.delete_status_name()
     statuses_page.delete_status_slug()
     statuses_page.input_status_data('test_updated', 'updated')
     assert statuses_page.find_updated_snackbar()
     status_data = statuses_page.get_status_data_by_name('test_updated')
     assert statuses_page.get_page_title() == "Task statuses"
+    assert statuses_page.browser_title_is_correct()
     assert status_data == {'id': '1', 'slug': 'updated', 'createdAt': 'Дата задана'}
 
 
 def test_status_delete(statuses_page, logged_in_main_page):
     statuses_page.click_on_status_row('Draft')
     assert statuses_page.get_page_title() == "Task status Draft"
+    assert statuses_page.browser_title_is_correct()
     statuses_page.delete_entity()
     assert statuses_page.find_deleted_snackbar()
     assert not statuses_page.is_status_exist('Draft')
@@ -155,11 +173,13 @@ def test_all_statuses_delete(statuses_page, logged_in_main_page):
     assert statuses_page.find_all_entities_deleted_snackbar()
     assert statuses_page.statuses_table_is_empty()
     assert statuses_page.get_page_title() == "Task statuses"
+    assert statuses_page.browser_title_is_correct()
 
 
 def test_create_label(labels_page, logged_in_main_page):
     labels_page.open_entity_creation_form()
     assert labels_page.get_page_title() == "Create Label"
+    assert labels_page.browser_title_is_correct()
     labels_page.input_label_data('test_label')
     assert labels_page.find_success_snackbar()
     assert labels_page.get_page_title() == "Label test_label"
@@ -173,6 +193,7 @@ def test_smoke_labels_list(labels_page, logged_in_main_page):
     assert labels_page.labels_table_is_loaded()
     labels_list = labels_page.get_all_labels_data()
     assert labels_page.get_page_title() == "Labels"
+    assert labels_page.browser_title_is_correct()
     assert labels_list == [
         {"id": "1", "name": "bug", "createdAt": "12/21/2023, 12:00:00 AM"},
         {"id": "2", "name": "feature", "createdAt": "12/21/2023, 12:00:00 AM"},
@@ -185,6 +206,7 @@ def test_smoke_labels_list(labels_page, logged_in_main_page):
 def test_label_update_validation(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('task')
     assert labels_page.get_page_title() == "Label task"
+    assert labels_page.browser_title_is_correct()
     labels_page.delete_label_name()
     labels_page.save_entity()
     assert labels_page.find_error_snackbar()
@@ -194,20 +216,24 @@ def test_label_update_validation(labels_page, logged_in_main_page):
 def test_update_label(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('task')
     assert labels_page.get_page_title() == "Label task"
+    assert labels_page.browser_title_is_correct()
     labels_page.input_label_data('updated_label')
     assert labels_page.find_updated_snackbar()
     label_data = labels_page.get_label_data_by_name('updated_label')
     assert label_data == {'id': '4', 'name': 'updated_label'}
     assert labels_page.get_page_title() == "Labels"
+    assert labels_page.browser_title_is_correct()
 
 
 def test_label_delete(labels_page, logged_in_main_page):
     labels_page.click_on_label_row('feature')
     assert labels_page.get_page_title() == "Label feature"
+    assert labels_page.browser_title_is_correct()
     labels_page.delete_entity()
     assert labels_page.find_deleted_snackbar()
     assert not labels_page.is_label_exist('feature')
     assert labels_page.get_page_title() == "Labels"
+    assert labels_page.browser_title_is_correct()
 
 
 def test_all_labels_delete(labels_page, logged_in_main_page):
@@ -216,27 +242,33 @@ def test_all_labels_delete(labels_page, logged_in_main_page):
     assert labels_page.find_all_entities_deleted_snackbar()
     assert labels_page.labels_table_is_empty()
     assert labels_page.get_page_title() == "Labels"
+    assert labels_page.browser_title_is_correct()
 
 
 def test_create_task(tasks_page, logged_in_main_page):
     assert tasks_page.open_entity_creation_form()
     assert tasks_page.get_page_title() == "Create Task"
+    assert tasks_page.browser_title_is_correct()
     tasks_page.create_task('emily@example.com', 'Test task', 'Test Content', 'Draft', 'critical')
     assert tasks_page.find_success_snackbar()
     assert tasks_page.get_page_title() == "Task Test task"
+    assert tasks_page.browser_title_is_correct()
     assert tasks_page.get_task_id_value() == '16'
     logged_in_main_page.go_to_tasks()
     task_data = tasks_page.get_task_data_by_name('Test task')
     assert tasks_page.get_page_title() == "Tasks"
+    assert tasks_page.browser_title_is_correct()
     assert task_data == {'Title': 'Test task', 'Content': 'Test Content', 'Edit_button_present': True, 'Show_button_present': True}
     tasks_page.open_show_task('Test task')
     assert tasks_page.get_page_title() == "Task Test task"
+    assert tasks_page.browser_title_is_correct()
 
 
 
 def test_update_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 11')
     assert tasks_page.get_page_title() == "Task Task 11"
+    assert tasks_page.browser_title_is_correct()
     tasks_page.change_assignee('emily@example.com')
     tasks_page.change_title('Changed')
     tasks_page.change_content('Changed content')
@@ -247,6 +279,7 @@ def test_update_task(tasks_page, logged_in_main_page):
     tasks_page.filter_by_assignee('emily@example.com')
     tasks_list = tasks_page.get_all_tasks_data()
     assert tasks_page.get_page_title() == "Tasks"
+    assert tasks_page.browser_title_is_correct()
     assert tasks_list == {
         'Draft': [], 
         'To Review': [], 
@@ -259,6 +292,7 @@ def test_update_task(tasks_page, logged_in_main_page):
 def test_task_creation_form_validation(tasks_page, logged_in_main_page):
     assert tasks_page.open_entity_creation_form()
     assert tasks_page.get_page_title() == "Create Task"
+    assert tasks_page.browser_title_is_correct()
     assert tasks_page.is_save_button_disabled()
     tasks_page.change_content('Changed content')
     assert not tasks_page.is_save_button_disabled()
@@ -271,6 +305,7 @@ def test_smoke_tasks_list(tasks_page, logged_in_main_page):
     assert tasks_page.task_page_is_loaded()
     tasks_list = tasks_page.get_all_tasks_data()
     assert tasks_page.get_page_title() == "Tasks"
+    assert tasks_page.browser_title_is_correct()
     assert tasks_list == {
         'Draft': [{'Title': 'Task 11', 'Content': 'Description of task 11', 'Index': '3220', 'Edit_button_present': True, 'Show_button_present': True}, 
                   {'Title': 'Task 5', 'Content': 'Description of task 5', 'Index': '3224', 'Edit_button_present': True, 'Show_button_present': True}, 
@@ -293,6 +328,7 @@ def test_tasks_filtration_list(tasks_page, logged_in_main_page):
     assert tasks_page.task_page_is_loaded()
     tasks_page.filter_by_assignee('jack@yahoo.com')
     assert tasks_page.get_page_title() == "Tasks"
+    assert tasks_page.browser_title_is_correct()
     filtered_tasks_list = tasks_page.get_all_tasks_data()
     assert filtered_tasks_list == {
         'Draft': [], 
@@ -326,7 +362,9 @@ def test_tasks_filtration_list(tasks_page, logged_in_main_page):
 def test_delete_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 14')
     assert tasks_page.get_page_title() == "Task Task 14"
+    assert tasks_page.browser_title_is_correct()
     tasks_page.delete_entity()
     assert tasks_page.find_deleted_snackbar()
     assert not tasks_page.is_task_present_in_status('To Publish', 'Task 14')
     assert tasks_page.get_page_title() == "Tasks"
+    assert tasks_page.browser_title_is_correct()
