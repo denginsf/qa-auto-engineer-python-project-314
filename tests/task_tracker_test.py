@@ -1,9 +1,5 @@
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
-from pages.users_page import UsersPage
-from pages.statuses_page import StatusesPage
-from pages.labels_page import LabelsPage
-from pages.tasks_page import TasksPage
 
 
 def test_login(driver, base_url):

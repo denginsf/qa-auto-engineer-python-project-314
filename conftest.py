@@ -41,7 +41,7 @@ def logged_in_main_page(driver, base_url):
     login_page.login('admin', 'admin')
     main_page = MainPage(driver, base_url)
     if not main_page.is_on_page('Welcome to the administration'):
-        raise RuntimeError(f'Login failed. Unexpected page')
+        raise RuntimeError('Login failed. Unexpected page')
     return main_page
 
 

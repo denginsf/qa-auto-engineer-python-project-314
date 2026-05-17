@@ -151,7 +151,6 @@ class BasePage:
 
     def wait_for_count_stable(self, locator, previous_count):
         self.wait.until(lambda d: len(d.find_elements(*locator)) != previous_count)
-        import time
         time.sleep(0.3)
         count = len(self.driver.find_elements(*locator))
         self.wait.until(lambda d: len(d.find_elements(*locator)) == count)
@@ -162,11 +161,7 @@ class BasePage:
 
 
     def is_on_page(self, expected_title):
-        try:
-            title = self.get_page_title()
-            return title == expected_title
-        except:
-            return False
+        return self.get_page_title() == expected_title
 
 
     def is_on_page_by_url(self, expected_url_part):
