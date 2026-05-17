@@ -1,7 +1,8 @@
 from selenium.webdriver.common.by import By
 
+
 class StatusesLocators:
-    STATUSES_TABLE_ROWS = (By.CSS_SELECTOR,'.MuiTableBody-root tr')
+    STATUSES_TABLE_ROWS = (By.CSS_SELECTOR, '.MuiTableBody-root tr')
     STATUS_ID_CELL = (By.CSS_SELECTOR, '.column-id span')
     SLUG_CELL = (By.CSS_SELECTOR, '.column-slug span')
     SLUG_COLUMN = (By.CSS_SELECTOR, '[data-field="slug"]')

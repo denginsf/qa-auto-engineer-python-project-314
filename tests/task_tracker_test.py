@@ -260,7 +260,6 @@ def test_create_task(tasks_page, logged_in_main_page):
     assert tasks_page.browser_title_is_correct()
 
 
-
 def test_update_task(tasks_page, logged_in_main_page):
     tasks_page.start_task_edit_by_name('Task 11')
     assert tasks_page.get_page_title() == "Task Task 11"

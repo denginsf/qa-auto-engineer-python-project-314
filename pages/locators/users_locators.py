@@ -2,15 +2,14 @@ from selenium.webdriver.common.by import By
 
 
 class UsersLocators:
-    #Форма юзеров
+    # Форма юзеров
     FORM = (By.CSS_SELECTOR, '.MuiStack-root')
     EMAIL_INPUT = (By.CSS_SELECTOR, 'input[name="email"]')
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="firstName"]')
     LAST_NAME_INPUT = (By.CSS_SELECTOR, 'input[name="lastName"]')
 
-
-    #Страница юзеров
-    USERS_TABLE_ROWS = (By.CSS_SELECTOR,'.MuiTableBody-root tr')
+    # Страница юзеров
+    USERS_TABLE_ROWS = (By.CSS_SELECTOR, '.MuiTableBody-root tr')
     EMAIL_CELL = (By.CSS_SELECTOR, '.column-email span')
     USER_ID_CELL = (By.CSS_SELECTOR, '.column-id span')
     FIRST_NAME_CELL = (By.CSS_SELECTOR, '.column-firstName span')

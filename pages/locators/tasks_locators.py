@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 
+
 class TasksLocators:
     TITLE_INPUT = (By.CSS_SELECTOR, 'input[name="title"]')
     CONTENT_INPUT = (By.CSS_SELECTOR, 'textarea[name="content"]')

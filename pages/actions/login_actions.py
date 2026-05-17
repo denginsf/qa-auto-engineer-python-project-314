@@ -1,5 +1,5 @@
-from pages.locators.login_locators import LoginLocators
 from pages.base_page import BasePage
+from pages.locators.login_locators import LoginLocators
 
 
 class LoginActions(BasePage):
