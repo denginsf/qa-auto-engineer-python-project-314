@@ -1,6 +1,6 @@
 [project]
 name = "hexlet-code"
-version = "0.1.0"
+version = "0.1.1"
 description = "Third project of 'Python QA Automation' course on hexlet.io"
 authors = [
     {name = "Алексей Деньгин", email = "wrk.dengin@gmail.com"}
