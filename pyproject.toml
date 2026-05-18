@@ -1,12 +1,16 @@
 [project]
 name = "hexlet-code"
 version = "0.1.0"
-description = "Add your description here"
+description = "Third project of 'Python QA Automation' course on hexlet.io"
+authors = [
+    {name = "Алексей Деньгин", email = "wrk.dengin@gmail.com"}
+]
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "allure-pytest>=2.15.3",
     "pytest>=9.0.3",
+    "pytest-cov>=4.0.0",
     "ruff>=0.15.11",
     "selenium>=4.43.0",
 ]
